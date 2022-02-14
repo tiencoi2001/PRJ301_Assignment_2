@@ -422,7 +422,6 @@
 
 .footer {
     position: relative;
-    margin-top: -110px;
     padding-top: 180px;
 }
 
@@ -540,10 +539,6 @@
     border-bottom-left-radius: 8px !important;
 }
 
-.bg-primary {
-    background-color: #06BBCC !important;
-}
-
 .form-group {
     margin-bottom: 1rem;
 }
@@ -608,14 +603,13 @@
     padding-bottom: 1rem !important;
 }
 
-.container-fluid{
+.container-login{
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 }

@@ -20,11 +20,11 @@ public class UserDBContext extends DBContext {
 
     public User getUser(String username, String password) {
         try {
-            String sql = "SELECT a.[AccountID],[Username],[Password],[Name],[DateOfBirth],[Email],[Phone],[Address], r.[RoleName]\n"
-                    + "FROM [Users] u\n"
-                    + "JOIN Accounts a ON a.AccountID = u.AccountID\n"
-                    + "JOIN Account_Role ar on ar.AccountID = a.AccountID\n"
-                    + "JOIN Roles r on r.RoleID = ar.RoleID\n"
+            String sql = "SELECT a.[AccountID],[Username],[Password],[Name],[DateOfBirth],[Email],[Phone],[Address], r.[RoleName] \n"
+                    + "FROM [Users] u \n"
+                    + "JOIN Accounts a ON a.AccountID = u.AccountID \n"
+                    + "JOIN Account_Role ar on ar.AccountID = a.AccountID \n"
+                    + "JOIN Roles r on r.RoleID = ar.RoleID \n"
                     + "WHERE Username = ? AND Password = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, username);

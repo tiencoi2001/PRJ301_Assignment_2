@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package auth;
+package booking;
 
-import dal.UserDBContext;
+import dal.RoomDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.User;
+import model.RoomType;
 
 /**
  *
  * @author Vu Duc Tien
  */
-public class LoginController extends HttpServlet {
+public class BookingController extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -33,11 +33,10 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getSession().getAttribute("account") != null) {
-            response.getWriter().print("pls logout before");
-        } else {
-            request.getRequestDispatcher("view/forUser/auth/login.jsp").forward(request, response);
-        }
+        RoomDBContext rdbc = new RoomDBContext();
+        ArrayList<RoomType> typeList = rdbc.getAllRoomType();
+        request.setAttribute("typeList", typeList);
+        request.getRequestDispatcher("view/forUser/page/booking.jsp").forward(request, response);
     }
 
     /**
@@ -51,20 +50,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
         
-        UserDBContext udbc = new UserDBContext();
-        User user = udbc.getUser(username, password);
-        if(user != null){
-            session.setAttribute("user", user);
-            response.sendRedirect("home");
-        }else{
-            session.setAttribute("user", null);
-            request.setAttribute("isFail", true);
-            request.getRequestDispatcher("view/forUser/auth/login.jsp").forward(request, response);
-        }
     }
 
     /**

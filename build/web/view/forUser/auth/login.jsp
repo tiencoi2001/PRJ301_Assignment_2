@@ -24,7 +24,7 @@
                 <div class="container-fluid bg-dark px-0">
                     <div class="row gx-0">
                         <div class="col-lg-3 bg-dark d-none d-lg-block">
-                            <a href="home" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
+                            <a href="${pageContext.request.contextPath}/home" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
                                 <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
                             </a>
                         </div>
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-                                <a href="index.html" class="navbar-brand d-block d-lg-none">
+                                <a href="${pageContext.request.contextPath}/home" class="navbar-brand d-block d-lg-none">
                                     <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
                                 </a>
                                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -50,7 +50,7 @@
                                 </button>
                                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                                     <div class="navbar-nav mr-auto py-0">
-                                        <a href="home" class="nav-item nav-link">Home</a>
+                                        <a href="${pageContext.request.contextPath}/home" class="nav-item nav-link">Home</a>
                                         <a href="about.html" class="nav-item nav-link">About</a>
                                         <a href="service.html" class="nav-item nav-link">Services</a>
                                         <a href="room.html" class="nav-item nav-link">Rooms</a>
@@ -64,55 +64,60 @@
                                         </div>
                                         <a href="contact.html" class="nav-item nav-link">Contact</a>
                                     </div>
-                                    <a href="login" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">Login<i class="fa fa-arrow-right ms-3"></i></a>
-                                </div>
-                            </nav>
-                        </div>
+                                <c:if test="${sessionScope.user == null}">
+                                    <a href="${pageContext.request.contextPath}/login" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">Log in<i class="fa fa-arrow-right ms-3"></i></a>
+                                    </c:if>
+                                    <c:if test="${sessionScope.user != null}">
+                                    <a href="${pageContext.request.contextPath}/logout" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">Log out<i class="fa fa-arrow-right ms-3"></i></a>
+                                    </c:if>
+                            </div>
+                        </nav>
                     </div>
                 </div>
-                <!-- Header End -->
+            </div>
+            <!-- Header End -->
 
-                <div class="container-fluid bg-registration py-5" style="margin: 3rem 0;">
-                    <div class="container py-5">
-                        <div class="row align-items-center">
-                            <div class="col-lg-7 mb-5 mb-lg-0">
-                                <div class="mb-4">
-                                    <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Need Any Courses</h5>
-                                    <h1 class="text-white">30% Off For New Students</h1>
-                                </div>
-                                <p class="text-white">Invidunt lorem justo sanctus clita. Erat lorem labore ea, justo dolor lorem ipsum ut sed eos,
-                                    ipsum et dolor kasd sit ea justo. Erat justo sed sed diam. Ea et erat ut sed diam sea ipsum est
-                                    dolor</p>
-                                <ul class="list-inline text-white m-0">
-                                    <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Labore eos amet dolor amet diam</li>
-                                    <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Etsea et sit dolor amet ipsum</li>
-                                    <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Diam dolor diam elitripsum vero.</li>
-                                </ul>
+            <div class="container-login bg-registration py-5">
+                <div class="container py-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-7 mb-5 mb-lg-0">
+                            <div class="mb-4">
+                                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Need Any Courses</h5>
+                                <h1 class="text-white">30% Off For New Students</h1>
                             </div>
-                            <div class="col-lg-5">
-                                <div class="card border-0">
-                                    <div class="card-header bg-light text-center p-4" style="display: flex">
-                                        <div class="form-header active"><a href="login"><h1 class="m-0">Sign In</h1></a></div>
-                                        <div class="form-header"><a href="register"><h1 class="m-0">Sign Up</h1></a></div>
-                                    </div>
-                                    <div class="card-body rounded-bottom bg-primary p-5">
-                                        <form>
-                                            <div class="form-group">
-                                                <input name="username" type="text" class="form-control border-0 p-4" placeholder="Username" required="required" />
-                                            </div>
-                                            <div class="form-group">
-                                                <input name="password" type="password" class="form-control border-0 p-4" placeholder="Password" required="required" />
-                                            </div>
-                                            <div>
-                                                <button class="btn btn-dark btn-block border-0 py-3" type="submit">Sign In</button>
-                                            </div>
-                                        </form>
-                                    </div>
+                            <p class="text-white">Invidunt lorem justo sanctus clita. Erat lorem labore ea, justo dolor lorem ipsum ut sed eos,
+                                ipsum et dolor kasd sit ea justo. Erat justo sed sed diam. Ea et erat ut sed diam sea ipsum est
+                                dolor</p>
+                            <ul class="list-inline text-white m-0">
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Good price</li>
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Safe booking</li>
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Online booking management</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-5">
+                            <div class="card border-0">
+                                <div class="card-header bg-light text-center p-4" style="display: flex">
+                                    <div class="form-header form-active"><a href="login"><h1 class="m-0">Sign In</h1></a></div>
+                                    <div class="form-header"><a href="register"><h1 class="m-0">Sign Up</h1></a></div>
+                                </div>
+                                <div class="card-body rounded-bottom bg-primary p-5">
+                                    <form action="login" method="post">
+                                        <div class="form-group">
+                                            <input name="username" type="text" class="form-control border-0 p-4" placeholder="Username" required="required" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input name="password" type="password" class="form-control border-0 p-4" placeholder="Password" required="required" />
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-dark btn-block border-0 py-3" type="submit">Sign In</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             <jsp:include page="../header_footer/footer.jsp"></jsp:include>
     </body>
 </html>

@@ -24,7 +24,7 @@
                 <div class="container-fluid bg-dark px-0">
                     <div class="row gx-0">
                         <div class="col-lg-3 bg-dark d-none d-lg-block">
-                            <a href="home" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
+                            <a href="${pageContext.request.contextPath}/home" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
                                 <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
                             </a>
                         </div>
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
-                                <a href="home" class="navbar-brand d-block d-lg-none">
+                                <a href="${pageContext.request.contextPath}/home" class="navbar-brand d-block d-lg-none">
                                     <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
                                 </a>
                                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -50,7 +50,7 @@
                                 </button>
                                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                                     <div class="navbar-nav mr-auto py-0">
-                                        <a href="home" class="nav-item nav-link active">Home</a>
+                                        <a href="${pageContext.request.contextPath}/home" class="nav-item nav-link active">Home</a>
                                         <a href="about.html" class="nav-item nav-link">About</a>
                                         <a href="service.html" class="nav-item nav-link">Services</a>
                                         <a href="room.html" class="nav-item nav-link">Rooms</a>
@@ -64,7 +64,12 @@
                                         </div>
                                         <a href="contact.html" class="nav-item nav-link">Contact</a>
                                     </div>
-                                    <a href="login" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">Login<i class="fa fa-arrow-right ms-3"></i></a>
+                                    <c:if test="${sessionScope.user == null}">
+                                    <a href="${pageContext.request.contextPath}/login" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">Log in<i class="fa fa-arrow-right ms-3"></i></a>
+                                    </c:if>
+                                    <c:if test="${sessionScope.user != null}">
+                                    <a href="${pageContext.request.contextPath}/logout" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">Log out<i class="fa fa-arrow-right ms-3"></i></a>
+                                    </c:if>
                                 </div>
                             </nav>
                         </div>
@@ -371,26 +376,6 @@
                     </div>
                 </div>
                 <!-- Testimonial End -->
-
-
-                <!-- Newsletter Start -->
-                <div class="container newsletter mt-5 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-10 border rounded p-1">
-                            <div class="border rounded text-center p-1">
-                                <div class="bg-white rounded text-center p-5">
-                                    <h4 class="mb-4">Subscribe Our <span class="text-primary text-uppercase">Newsletter</span></h4>
-                                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                                        <input class="form-control w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email">
-                                        <button type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Newsletter Start -->
-
             <jsp:include page="../header_footer/footer.jsp"></jsp:include>
     </body>
 </html>

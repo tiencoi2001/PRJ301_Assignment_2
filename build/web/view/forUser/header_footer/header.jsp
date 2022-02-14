@@ -36,5 +36,6 @@
 
     <!-- Template Stylesheet -->
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/popup.css" rel="stylesheet">
 </head>
 
