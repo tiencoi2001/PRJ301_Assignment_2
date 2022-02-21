@@ -19,11 +19,13 @@ public class Order {
     private String name;
     private String email;
     private String phone;
+    private int numberOfRooms;
+    private int typeID;
 
     public Order() {
     }
 
-    public Order(int orderID, int accountID, Date checkIN, Date checkOUT, String name, String email, String phone) {
+    public Order(int orderID, int accountID, Date checkIN, Date checkOUT, String name, String email, String phone, int numberOfRooms, int typeID) {
         this.orderID = orderID;
         this.accountID = accountID;
         this.checkIN = checkIN;
@@ -31,6 +33,8 @@ public class Order {
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.numberOfRooms = numberOfRooms;
+        this.typeID = typeID;
     }
 
     public int getOrderID() {
@@ -88,5 +92,25 @@ public class Order {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
+
+    public int getNumberOfRooms() {
+        return numberOfRooms;
+    }
+
+    public void setNumberOfRooms(int numberOfRooms) {
+        this.numberOfRooms = numberOfRooms;
+    }
+
+    public int getTypeID() {
+        return typeID;
+    }
+
+    public void setTypeID(int typeID) {
+        this.typeID = typeID;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "orderID=" + orderID + ", accountID=" + accountID + ", checkIN=" + checkIN + ", checkOUT=" + checkOUT + ", name=" + name + ", email=" + email + ", phone=" + phone + ", numberOfRooms=" + numberOfRooms + ", typeID=" + typeID + '}';
+    }
 }

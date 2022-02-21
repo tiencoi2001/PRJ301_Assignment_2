@@ -24,7 +24,7 @@ public class RoomDBContext extends DBContext {
     public ArrayList<RoomType> getAllRoomType() {
         ArrayList<RoomType> roomTypes = new ArrayList<>();
         try {
-            String sql = "SELECT [TypeID], [TypeName], [Price] FROM [RoomTypes]";
+            String sql = "SELECT [TypeID],[TypeName],[Price] FROM [RoomTypes]";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {

@@ -6,31 +6,22 @@ package page;
  * and open the template in the editor.
  */
 
+import dal.RoomDBContext;
 import java.io.IOException;
+import java.sql.Date;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Order;
+import model.RoomType;
 
 /**
  *
  * @author Vu Duc Tien
  */
 public class HomeController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("view/forUser/page/home.jsp").forward(request, response);
-    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -44,7 +35,10 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        RoomDBContext rdbc = new RoomDBContext();
+        ArrayList<RoomType> typeList = rdbc.getAllRoomType();
+        request.setAttribute("typeList", typeList);
+        request.getRequestDispatcher("view/forUser/page/home.jsp").forward(request, response);
     }
 
     /**
@@ -58,7 +52,19 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Date checkIN = Date.valueOf(request.getParameter("checkIN"));
+        Date checkOUT = Date.valueOf(request.getParameter("checkOUT"));
+        int numberOfRooms = Integer.parseInt(request.getParameter("numberOfRooms"));
+        int typeID = Integer.parseInt(request.getParameter("type"));
+        
+        Order order = new Order();
+        order.setCheckIN(checkIN);
+        order.setCheckOUT(checkOUT);
+        order.setNumberOfRooms(numberOfRooms);
+        order.setTypeID(typeID);
+        
+        request.getSession().setAttribute("order", order);
+        response.sendRedirect(request.getContextPath() + "/booking");
     }
 
     /**

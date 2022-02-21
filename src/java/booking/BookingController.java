@@ -5,14 +5,17 @@
  */
 package booking;
 
+import dal.OrderDBContext;
 import dal.RoomDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Order;
 import model.RoomType;
 
 /**
@@ -50,7 +53,30 @@ public class BookingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        int accountID = Integer.parseInt(request.getParameter("accountID"));
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        Date checkIN = Date.valueOf(request.getParameter("checkIN"));
+        Date checkOUT = Date.valueOf(request.getParameter("checkOUT"));
+        int numberOfRooms = Integer.parseInt(request.getParameter("numberOfRooms"));
+        int typeID = Integer.parseInt(request.getParameter("type"));
+
+        Order order = new Order();
+        order.setAccountID(accountID);
+        order.setName(name);
+        order.setEmail(email);
+        order.setPhone(phone);
+        order.setCheckIN(checkIN);
+        order.setCheckOUT(checkOUT);
+        order.setNumberOfRooms(numberOfRooms);
+        order.setTypeID(typeID);
+        OrderDBContext odbc = new OrderDBContext();
+        if(odbc.insertOrderWait(order)){
+            request.setAttribute("success", true);
+            request.getSession().removeAttribute("order");
+            request.getRequestDispatcher("view/forUser/page/booking.jsp").forward(request, response);
+        }       
     }
 
     /**
