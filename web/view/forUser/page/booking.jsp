@@ -40,6 +40,15 @@
                                     <p class="mb-0">0208 6288 388</p>
                                 </div>
                             </div>
+                            <div class="col-lg-1 px-2"></div>
+                            <c:if test="${sessionScope.user != null}">
+                                <div class="col-lg-4 px-5 text-start">
+                                    <div class="h-100 d-inline-flex align-items-center py-2">
+                                        <i class="fa fa-users text-primary me-2"></i>
+                                        <a href="${pageContext.request.contextPath}/profile"><p class="mb-0">${sessionScope.user.name}</p></a>
+                                    </div>
+                                </div>
+                            </c:if>
                         </div>
                         <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
                             <a href="${pageContext.request.contextPath}/home" class="navbar-brand d-block d-lg-none">
@@ -100,7 +109,7 @@
                                     <div class="form-header"><h1 class="m-0">Booking</h1></div>
                                 </div>
                                 <div class="card-body rounded-bottom bg-primary p-5">
-                                    <form action="booking" method="post">
+                                    <form action="booking" method="post" id="bookingform">
                                         <input type="hidden" name="accountID" value="${sessionScope.user.id}">
                                         <div class="form-group">
                                             <input name="name" type="text" class="form-control border-0 p-4" placeholder="Fullname" value="${sessionScope.user.name}" required="required" />
@@ -118,8 +127,9 @@
                                             <input name="checkOUT" type="date" class="form-control border-0 p-4" placeholder="Check Out" value="${sessionScope.order.checkOUT}" required="required" />
                                         </div>
                                         <div class="form-group">
-                                            <input id="numberOfRoom" name="numberOfRooms" type="number" class="form-control border-0 p-4" placeholder="Number Of Room" value="${sessionScope.order.numberOfRooms}" required="required" />
+                                            <input id="numberOfRooms" name="numberOfRooms" type="number" class="form-control border-0 p-4" placeholder="Number Of Room" value="${sessionScope.order.numberOfRooms}" required="required" />
                                         </div>
+                                        <div id="number_alert"></div>
                                         <div class="form-group">
                                             <select id="type" name="type">
                                                 <option value="0">----------Type Room----------</option>
@@ -128,8 +138,9 @@
                                                 </c:forEach>
                                             </select>
                                         </div>
+                                        <div id="type_alert"></div>
                                         <div>
-                                            <button class="btn btn-dark btn-block border-0 py-3" type="submit">Booking</button>
+                                            <button class="btn btn-dark btn-block border-0 py-3" onclick="checkNum()" type="button">Booking</button>
                                         </div>
                                         <div>
                                             <c:if test="${requestScope.success == true}">
@@ -142,8 +153,20 @@
                                     <script>
                                         function checkNum() {
                                             var type = document.getElementById("type").value;
-                                            if (type == 0) {
+                                            var numberOfRooms = document.getElementById("numberOfRooms").value;
+                                            if (type <= 0) {
+                                                document.getElementById("type_alert").innerHTML = "<p>Please choose type</p>";
+                                            }
+                                            if (numberOfRooms <= 0) {
+                                                document.getElementById("number_alert").innerHTML = "<p>Number of room must bigger than 0</p>";
+                                            }
 
+                                            if (type > 0 && numberOfRooms > 0) {
+                                                document.getElementById("type_alert").innerHTML = "";
+                                                document.getElementById("number_alert").innerHTML = "";
+                                                document.getElementById("bookingform").onsubmit = function () {
+                                                    return true;
+                                                }
                                             }
                                         }
                                     </script>

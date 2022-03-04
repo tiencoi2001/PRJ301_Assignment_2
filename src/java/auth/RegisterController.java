@@ -5,11 +5,14 @@
  */
 package auth;
 
+import dal.UserDBContext;
 import java.io.IOException;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 
 /**
  *
@@ -44,7 +47,33 @@ public class RegisterController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String name = request.getParameter("name");
+        Date birthday = Date.valueOf(request.getParameter("birthday"));
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setName(name);
+        user.setDob(birthday);
+        user.setEmail(email);
+        user.setPhone(phone);
+        user.setAddress(address);
+        user.setRole("customer");
+
+        UserDBContext udbc = new UserDBContext();
+        if (udbc.isExistAccount(user)) {
+            request.setAttribute("fail", true);
+            request.getRequestDispatcher("view/forUser/auth/register.jsp").forward(request, response);
+        } else {
+            udbc.insertUser(user);
+            request.setAttribute("done", true);
+            request.getRequestDispatcher("view/forUser/auth/register.jsp").forward(request, response);
+        }
     }
 
     /**

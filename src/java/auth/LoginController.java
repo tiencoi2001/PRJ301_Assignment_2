@@ -33,7 +33,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getSession().getAttribute("account") != null) {
+        if (request.getSession().getAttribute("user") != null) {
             response.getWriter().print("pls logout before");
         } else {
             request.getRequestDispatcher("view/forUser/auth/login.jsp").forward(request, response);
@@ -51,17 +51,16 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
         UserDBContext udbc = new UserDBContext();
         User user = udbc.getUser(username, password);
         if(user != null){
-            session.setAttribute("user", user);
+            request.getSession().setAttribute("user", user);
             response.sendRedirect("home");
         }else{
-            session.setAttribute("user", null);
+            request.getSession().setAttribute("user", null);
             request.setAttribute("isFail", true);
             request.getRequestDispatcher("view/forUser/auth/login.jsp").forward(request, response);
         }

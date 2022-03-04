@@ -121,13 +121,19 @@
                                             <div>
                                                 <button class="btn btn-dark btn-block border-0 py-3" type="submit">Register</button>
                                             </div>
-                                        </form>
-                                    </div>
+                                        <c:if test="${requestScope.fail == true}">
+                                            <div>Username, email or phone has been used</div>
+                                        </c:if>
+                                        <c:if test="${requestScope.done == true}">
+                                            <div>Register successful</div>
+                                        </c:if>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             <jsp:include page="../header_footer/footer.jsp"></jsp:include>
     </body>
 </html>

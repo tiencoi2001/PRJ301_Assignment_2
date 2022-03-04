@@ -53,6 +53,7 @@ public class BookingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         int accountID = Integer.parseInt(request.getParameter("accountID"));
         String name = request.getParameter("name");
         String email = request.getParameter("email");

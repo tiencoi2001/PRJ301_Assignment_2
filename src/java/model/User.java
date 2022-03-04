@@ -17,7 +17,7 @@ public class User {
     private String username;
     private String password;
     private String name;
-    private Date DoB;
+    private Date dob;
     private String email;
     private String phone;
     private String address;
@@ -26,12 +26,12 @@ public class User {
     public User(){
     }
 
-    public User(int id, String username, String password, String name, Date DoB, String email, String phone, String address, String role) {
+    public User(int id, String username, String password, String name, Date dob, String email, String phone, String address, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
-        this.DoB = DoB;
+        this.dob = dob;
         this.email = email;
         this.phone = phone;
         this.address = address;
@@ -70,12 +70,12 @@ public class User {
         this.name = name;
     }
 
-    public Date getDoB() {
-        return DoB;
+    public Date getDob() {
+        return dob;
     }
 
-    public void setDoB(Date DoB) {
-        this.DoB = DoB;
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 
     public String getEmail() {
@@ -112,6 +112,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", name=" + name + ", DoB=" + DoB + ", email=" + email + ", phone=" + phone + ", address=" + address + ", role=" + role + '}';
+        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", name=" + name + ", DoB=" + dob + ", email=" + email + ", phone=" + phone + ", address=" + address + ", role=" + role + '}';
     }
 }

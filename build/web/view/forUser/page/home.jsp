@@ -40,7 +40,17 @@
                                     <p class="mb-0">0208 6288 388</p>
                                 </div>
                             </div>
+                            <div class="col-lg-1 px-2"></div>
+                            <c:if test="${sessionScope.user != null}">
+                                <div class="col-lg-4 px-5 text-start">
+                                    <div class="h-100 d-inline-flex align-items-center py-2">
+                                        <i class="fa fa-users text-primary me-2"></i>
+                                        <a href="${pageContext.request.contextPath}/profile"><p class="mb-0">${sessionScope.user.name}</p></a>
+                                    </div>
+                                </div>
+                            </c:if>
                         </div>
+
                         <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
                             <a href="${pageContext.request.contextPath}/home" class="navbar-brand d-block d-lg-none">
                                 <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
@@ -88,7 +98,7 @@
                                     <h6 class="section-title text-white text-uppercase mb-3 animated slideInDown">Luxury Living</h6>
                                     <h1 class="display-3 text-white mb-4 animated slideInDown">Discover A Brand Luxurious Hotel</h1>
                                     <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Our Rooms</a>
-                                    <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Room</a>
+                                    <a href="${pageContext.request.contextPath}/booking" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Book A Room</a>
                                 </div>
                             </div>
                         </div>
@@ -153,13 +163,33 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn btn-primary w-100" type="submit">Book</button>
+                                    <button class="btn btn-primary w-100" type="button">Book</button>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
+            <script>
+                function checkNum() {
+                    var type = document.getElementById("type").value;
+                    var numberOfRooms = document.getElementById("numberOfRooms").value;
+                    if (type <= 0) {
+                        document.getElementById("type_alert").innerHTML = "<p>Please choose type</p>";
+                    }
+                    if (numberOfRooms <= 0) {
+                        document.getElementById("number_alert").innerHTML = "<p>Number of room must bigger than 0</p>";
+                    }
+
+                    if (type > 0 && numberOfRooms > 0) {
+                        document.getElementById("type_alert").innerHTML = "";
+                        document.getElementById("number_alert").innerHTML = "";
+                        document.getElementById("bookingform").onsubmit = function () {
+                            return true;
+                        }
+                    }
+                }
+            </script>
             <!-- Booking End -->
 
 

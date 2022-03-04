@@ -111,6 +111,9 @@
                                         <div>
                                             <button class="btn btn-dark btn-block border-0 py-3" type="submit">Sign In</button>
                                         </div>
+                                        <c:if test="${requestScope.isFail == true}">
+                                            <div>Wrong username or password</div>
+                                        </c:if>
                                     </form>
                                 </div>
                             </div>
