@@ -112,29 +112,29 @@
                                     <form action="booking" method="post" id="bookingform">
                                         <input type="hidden" name="accountID" value="${sessionScope.user.id}">
                                         <div class="form-group">
-                                            <input name="name" type="text" class="form-control border-0 p-4" placeholder="Fullname" value="${sessionScope.user.name}" required="required" />
+                                            <input name="name" type="text" class="form-control border-0 p-4" placeholder="Fullname" value="${sessionScope.user.name}" required/>
                                         </div>
                                         <div class="form-group">
-                                            <input name="email" type="email" class="form-control border-0 p-4" placeholder="Email" value="${sessionScope.user.email}" required="required" />
+                                            <input name="email" type="email" class="form-control border-0 p-4" placeholder="Email" value="${sessionScope.user.email}" required />
                                         </div>
                                         <div class="form-group">
-                                            <input name="phone" type="tel" class="form-control border-0 p-4" placeholder="Phone" value="${sessionScope.user.phone}" required="required" />
+                                            <input name="phone" type="tel" class="form-control border-0 p-4" placeholder="Phone" value="${sessionScope.user.phone}" required />
                                         </div>
                                         <div class="form-group">
-                                            <input name="checkIN" type="date" class="form-control border-0 p-4" placeholder="Check In" value="${sessionScope.order.checkIN}" required="required" />
+                                            <input name="checkIN" type="date" class="form-control border-0 p-4" placeholder="Check In" value="${sessionScope.order.checkIN}" required />
                                         </div>
                                         <div class="form-group">
-                                            <input name="checkOUT" type="date" class="form-control border-0 p-4" placeholder="Check Out" value="${sessionScope.order.checkOUT}" required="required" />
+                                            <input name="checkOUT" type="date" class="form-control border-0 p-4" placeholder="Check Out" value="${sessionScope.order.checkOUT}" required />
                                         </div>
                                         <div class="form-group">
-                                            <input id="numberOfRooms" name="numberOfRooms" type="number" class="form-control border-0 p-4" placeholder="Number Of Room" value="${sessionScope.order.numberOfRooms}" required="required" />
+                                            <input id="numberOfRooms" name="numberOfRooms" type="number" class="form-control border-0 p-4" placeholder="Number Of Room" value="${sessionScope.order.numberOfRooms}" required />
                                         </div>
                                         <div id="number_alert"></div>
                                         <div class="form-group">
-                                            <select id="type" name="type">
+                                            <select id="type" class="form-control" name="type">
                                                 <option value="0">----------Type Room----------</option>
                                                 <c:forEach items="${requestScope.typeList}" var="type">
-                                                    <option ${sessionScope.order.typeID eq type.id ? "selected=\"selected\"" : ""} value="${type.id}">${type.name} (${type.price}/day)</option>
+                                                    <option ${sessionScope.order.roomType.id eq type.id ? "selected=\"selected\"" : ""} value="${type.id}">${type.name} (${type.price}/day)</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -147,6 +147,9 @@
                                                 <p>Booking successful!</p>
                                                 <p>We will email you soon,</p>
                                                 <p>Thank you and have a good day!</p>
+                                            </c:if>
+                                            <c:if test="${requestScope.fail == true}">
+                                                <p>Booking fail</p>
                                             </c:if>
                                         </div>
                                     </form>
@@ -164,9 +167,7 @@
                                             if (type > 0 && numberOfRooms > 0) {
                                                 document.getElementById("type_alert").innerHTML = "";
                                                 document.getElementById("number_alert").innerHTML = "";
-                                                document.getElementById("bookingform").onsubmit = function () {
-                                                    return true;
-                                                }
+                                                document.getElementById("bookingform").submit();
                                             }
                                         }
                                     </script>

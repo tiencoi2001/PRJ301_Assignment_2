@@ -7,7 +7,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- Left side column. contains the logo and sidebar -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/setting.css">
 
 <aside class="left-side sidebar-offcanvas">
     <!-- sidebar: style can be found in sidebar.less -->
@@ -18,7 +17,7 @@
                 <img src="https://th.bing.com/th/id/OIP.CPCyt52dUDhWIhy1K3guLAHaHa?pid=ImgDet&rs=1" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-                <p>Hello, ${sessionScope.account.fullname}</p>
+                <p>Hello, ${sessionScope.user.name}</p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -31,41 +30,28 @@
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                <a href="${pageContext.request.contextPath}/admin/vieworder">
+                    <i class="fa fa-calendar"></i> <span>View Order</span>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/viewaccess">
+                    <i class="fa fa-check-circle"></i> <span>Order Detail</span>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/paid">
+                    <i class="fa fa-check-circle"></i> <span>Paid Invoices</span>
+                </a>
+            </li>
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/unpaid">
+                    <i class="fa fa-check-circle"></i> <span>Unpaid Invoices</span>
                 </a>
             </li>
             <li>
                 <a href="#">
                     <i class="fa fa-gavel"></i> <span>General</span>
-                </a>
-            </li>
-            <li ${pageContext.request.requestURI.contains("post") ? "class=\"active\"" : ""}>
-                <a  href="${pageContext.request.contextPath}/director/post/list">
-                    <i class="fa fa-book"></i> <span>Posts</span>
-                </a>
-            </li>
-            <li ${pageContext.request.requestURI.contains("settinglist") ? "class=\"active\"" : ""}>
-                <a  href="${pageContext.request.contextPath}/director/setting/settinglist">
-                    <i class="fa fa-wrench"></i> <span>Setting List</span>
-                </a>
-            </li>
-            <li
-                <c:if test="${tag eq 'userlist'}">class="active"</c:if>  >
-                <a href="${pageContext.request.contextPath}/director/user/userlist">
-                    <i class="fa fa-user"></i> <span>Users List</span>
-                </a>
-            </li>
-            <li
-                <c:if test="${tag eq 'subjectlist'}">class="active"</c:if>  >
-                <a href="${pageContext.request.contextPath}/director/subject/subjectlist">
-                    <i class="far fa-list-alt"></i> <span style="padding-left: 5px;">Subject List</span>
-                </a>
-            </li>
-            <li
-                <c:if test="${tag eq 'classeslist'}">class="active"</c:if>  >
-                <a href="${pageContext.request.contextPath}/director/class/classeslist">
-                    <i class="far fa-chalkboard-teacher"></i> <span style="padding-left: 5px;">Class List</span>
                 </a>
             </li>
         </ul>

@@ -71,13 +71,23 @@ public class BookingController extends HttpServlet {
         order.setCheckIN(checkIN);
         order.setCheckOUT(checkOUT);
         order.setNumberOfRooms(numberOfRooms);
-        order.setTypeID(typeID);
+        
+        RoomType rt = new RoomType();
+        rt.setId(typeID);
+        order.setRoomType(rt);
+        
+        RoomDBContext rdbc = new RoomDBContext();
+        ArrayList<RoomType> typeList = rdbc.getAllRoomType();
+        request.setAttribute("typeList", typeList);
+        
         OrderDBContext odbc = new OrderDBContext();
-        if(odbc.insertOrderWait(order)){
+        if(odbc.insertOrder(order)){
             request.setAttribute("success", true);
             request.getSession().removeAttribute("order");
-            request.getRequestDispatcher("view/forUser/page/booking.jsp").forward(request, response);
-        }       
+        }else{
+            request.setAttribute("fail", true);
+        }
+        request.getRequestDispatcher("view/forUser/page/booking.jsp").forward(request, response);
     }
 
     /**

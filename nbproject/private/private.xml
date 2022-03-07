@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/src/java/for_admin/AdminHomeController.java</file>
+            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forAdmin/page/viewaccess.jsp</file>
+            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forAdmin/page/detail.jsp</file>
             <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forAdmin/page/temp.jsp</file>
             <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forAdmin/page/home.jsp</file>
-            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forAdmin/header_footer/leftmenu.jsp</file>
-            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forAdmin/header_footer/header.jsp</file>
         </group>
     </open-files>
 </project-private>

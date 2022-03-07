@@ -163,7 +163,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn btn-primary w-100" type="button">Book</button>
+                                    <button class="btn btn-primary w-100" type="submit">Book</button>
                                 </div>
                             </div>
                         </div>

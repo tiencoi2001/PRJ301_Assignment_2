@@ -28,6 +28,30 @@
         <servlet-name>AdminHomeController</servlet-name>
         <servlet-class>for_admin.AdminHomeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccessController</servlet-name>
+        <servlet-class>for_admin.AccessController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewOrderController</servlet-name>
+        <servlet-class>for_admin.ViewOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAccessController</servlet-name>
+        <servlet-class>for_admin.ViewAccessController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewPaidController</servlet-name>
+        <servlet-class>for_admin.ViewPaidController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewUnpaidController</servlet-name>
+        <servlet-class>for_admin.ViewUnpaidController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChooseRoomController</servlet-name>
+        <servlet-class>for_admin.ChooseRoomController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -55,6 +79,30 @@
     <servlet-mapping>
         <servlet-name>AdminHomeController</servlet-name>
         <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccessController</servlet-name>
+        <url-pattern>/admin/access</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewOrderController</servlet-name>
+        <url-pattern>/admin/vieworder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAccessController</servlet-name>
+        <url-pattern>/admin/viewaccess</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewPaidController</servlet-name>
+        <url-pattern>/admin/paid</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewUnpaidController</servlet-name>
+        <url-pattern>/admin/unpaid</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChooseRoomController</servlet-name>
+        <url-pattern>/admin/chooseroom</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

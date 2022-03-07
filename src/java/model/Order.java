@@ -12,6 +12,7 @@ import java.sql.Date;
  * @author Vu Duc Tien
  */
 public class Order {
+
     private int orderID;
     private int accountID;
     private Date checkIN;
@@ -20,12 +21,13 @@ public class Order {
     private String email;
     private String phone;
     private int numberOfRooms;
-    private int typeID;
+    private RoomType roomType;
+    private boolean access;
 
     public Order() {
     }
 
-    public Order(int orderID, int accountID, Date checkIN, Date checkOUT, String name, String email, String phone, int numberOfRooms, int typeID) {
+    public Order(int orderID, int accountID, Date checkIN, Date checkOUT, String name, String email, String phone, int numberOfRooms, RoomType roomType, boolean access) {
         this.orderID = orderID;
         this.accountID = accountID;
         this.checkIN = checkIN;
@@ -34,7 +36,8 @@ public class Order {
         this.email = email;
         this.phone = phone;
         this.numberOfRooms = numberOfRooms;
-        this.typeID = typeID;
+        this.roomType = roomType;
+        this.access = access;
     }
 
     public int getOrderID() {
@@ -101,16 +104,24 @@ public class Order {
         this.numberOfRooms = numberOfRooms;
     }
 
-    public int getTypeID() {
-        return typeID;
+    public RoomType getRoomType() {
+        return roomType;
     }
 
-    public void setTypeID(int typeID) {
-        this.typeID = typeID;
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
+    }
+
+    public boolean isAccess() {
+        return access;
+    }
+
+    public void setAccess(boolean access) {
+        this.access = access;
     }
 
     @Override
     public String toString() {
-        return "Order{" + "orderID=" + orderID + ", accountID=" + accountID + ", checkIN=" + checkIN + ", checkOUT=" + checkOUT + ", name=" + name + ", email=" + email + ", phone=" + phone + ", numberOfRooms=" + numberOfRooms + ", typeID=" + typeID + '}';
+        return "Order{" + "orderID=" + orderID + ", accountID=" + accountID + ", checkIN=" + checkIN + ", checkOUT=" + checkOUT + ", name=" + name + ", email=" + email + ", phone=" + phone + ", numberOfRooms=" + numberOfRooms + ", roomType=" + roomType + ", access=" + access + '}';
     }
 }

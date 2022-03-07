@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Order;
 import model.Room;
 import model.RoomType;
 import model.User;
@@ -40,12 +41,105 @@ public class RoomDBContext extends DBContext {
         }
         return null;
     }
-    
-    public static void main(String[] args) {
-        RoomDBContext rdbc = new RoomDBContext();
-        ArrayList<RoomType> roomTypes = rdbc.getAllRoomType();
-        for (RoomType roomType : roomTypes) {
-            System.out.println(roomType.getId() + " " + roomType.getName() + " " + roomType.getPrice());
+
+    public ArrayList<Room> getRooms(Order order) {
+        ArrayList<Room> rooms = new ArrayList<>();
+        try {
+            String sql = "SELECT [RoomID],[RoomName],[TypeID] \n"
+                    + "FROM [Rooms] \n"
+                    + "where RoomID not in (  \n"
+                    + "select RoomID from Orders o  \n"
+                    + "join Order_Room ro on ro.OrderID = o.OrderID  \n"
+                    + "where ((o.CheckIN <= ? and o.CheckOUT >= ?) \n"
+                    + "or (o.CheckIN <= ? and o.CheckOUT >= ?))\n"
+                    + "and o.TypeID = ?)  \n"
+                    + "and TypeID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setDate(1, order.getCheckIN());
+            stm.setDate(2, order.getCheckIN());
+            stm.setDate(3, order.getCheckOUT());
+            stm.setDate(4, order.getCheckOUT());
+            stm.setInt(5, order.getRoomType().getId());
+            stm.setInt(6, order.getRoomType().getId());
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Room r = new Room();
+                r.setId(rs.getInt(1));
+                r.setName(rs.getString(2));
+                rooms.add(r);
+            }
+            return rooms;
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
+    }
+
+    public void setRooms(int orderID, String[] rooms) {
+        try {
+            connection.setAutoCommit(false);
+            
+            String sql1 = "DELETE FROM [Order_Room] where OrderID = ?";
+            PreparedStatement stm1 = connection.prepareStatement(sql1);
+            stm1.setInt(1, orderID);
+            stm1.executeUpdate();
+            
+            for (String room : rooms) {
+                String sql2 = "INSERT INTO [Order_Room]([OrderID],[RoomID])\n"
+                        + "     VALUES(?,?)";
+                PreparedStatement stm2 = connection.prepareStatement(sql2);
+                stm2.setInt(1, orderID);
+                stm2.setInt(2, Integer.parseInt(room));
+                stm2.executeUpdate();
+            }
+            
+            String sql3 = "UPDATE [Orders] SET [Access] = 'true' WHERE OrderID = ?";
+            PreparedStatement stm3 = connection.prepareStatement(sql3);
+            stm3.setInt(1, orderID);
+            stm3.executeUpdate();
+            
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(RoomDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(RoomDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+//    public void insertRoom(String name, int num){
+//        try {
+//            connection.setAutoCommit(false);
+//            String sql = "INSERT INTO [Rooms] ([RoomName],[TypeID]) VALUES (?,?)";
+//            PreparedStatement stm = connection.prepareStatement(sql);
+//            stm.setString(1, name);
+//            stm.setInt(2, num);
+//            stm.executeUpdate();
+//            connection.commit();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//            try {
+//                connection.rollback();
+//            } catch (SQLException ex1) {
+//                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+//            }
+//        } finally {
+//            try {
+//                connection.setAutoCommit(true);
+//            } catch (SQLException ex) {
+//                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
+    public static void main(String[] args) {
+
     }
 }

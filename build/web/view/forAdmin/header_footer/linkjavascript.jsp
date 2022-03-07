@@ -6,31 +6,31 @@
 
 <!-- jQuery 2.0.2 -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/bootstrap_for_admin/js/jquery.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/css_forAdmin/js/jquery.min.js" type="text/javascript"></script>
 
 <!-- jQuery UI 1.10.3 -->
-<script src="${pageContext.request.contextPath}/bootstrap_for_admin/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/css_forAdmin/js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <!-- Bootstrap -->
-<script src="${pageContext.request.contextPath}/bootstrap_for_admin/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/css_forAdmin/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- daterangepicker -->
-<script src="${pageContext.request.contextPath}/bootstrap_for_admin/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/css_forAdmin/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
 
-<script src="${pageContext.request.contextPath}/bootstrap_for_admin/js/plugins/chart.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/css_forAdmin/js/plugins/chart.js" type="text/javascript"></script>
 
 <!-- datepicker
 <script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>-->
 <!-- Bootstrap WYSIHTML5
 <script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>-->
 <!-- iCheck -->
-<script src="${pageContext.request.contextPath}/bootstrap_for_admin/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/css_forAdmin/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
 <!-- calendar -->
-<script src="${pageContext.request.contextPath}/bootstrap_for_admin/js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/css_forAdmin/js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
 
 <!-- Director App -->
-<script src="${pageContext.request.contextPath}/bootstrap_for_admin/js/Director/app.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/css_forAdmin/js/Director/app.js" type="text/javascript"></script>
 
 <!-- Director dashboard demo (This is only for demo purposes) -->
-<script src="${pageContext.request.contextPath}/bootstrap_for_admin/js/Director/dashboard.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/css_forAdmin/js/Director/dashboard.js" type="text/javascript"></script>
 
 <!-- Director for demo purposes -->
 <script type="text/javascript">
@@ -93,5 +93,3 @@
     });
     // Chart.defaults.global.responsive = true;
 </script>
-
-<script src="${pageContext.request.contextPath}/js/settingcode.js" type="text/javascript"></script>

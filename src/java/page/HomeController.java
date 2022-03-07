@@ -61,7 +61,11 @@ public class HomeController extends HttpServlet {
         order.setCheckIN(checkIN);
         order.setCheckOUT(checkOUT);
         order.setNumberOfRooms(numberOfRooms);
-        order.setTypeID(typeID);
+        
+        RoomType rt = new RoomType();
+        rt.setId(typeID);
+        
+        order.setRoomType(rt);
         
         request.getSession().setAttribute("order", order);
         response.sendRedirect(request.getContextPath() + "/booking");
