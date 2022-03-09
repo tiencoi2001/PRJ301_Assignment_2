@@ -54,7 +54,7 @@ public class BookingController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        int accountID = Integer.parseInt(request.getParameter("accountID"));
+        String raw_accountID = request.getParameter("accountID");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
@@ -64,27 +64,29 @@ public class BookingController extends HttpServlet {
         int typeID = Integer.parseInt(request.getParameter("type"));
 
         Order order = new Order();
-        order.setAccountID(accountID);
+        if (raw_accountID != "" && raw_accountID.length() != 0) {
+            order.setAccountID(Integer.parseInt(request.getParameter("accountID")));
+        }
         order.setName(name);
         order.setEmail(email);
         order.setPhone(phone);
         order.setCheckIN(checkIN);
         order.setCheckOUT(checkOUT);
         order.setNumberOfRooms(numberOfRooms);
-        
+
         RoomType rt = new RoomType();
         rt.setId(typeID);
         order.setRoomType(rt);
-        
+
         RoomDBContext rdbc = new RoomDBContext();
         ArrayList<RoomType> typeList = rdbc.getAllRoomType();
         request.setAttribute("typeList", typeList);
-        
+
         OrderDBContext odbc = new OrderDBContext();
-        if(odbc.insertOrder(order)){
+        if (odbc.insertOrder(order)) {
             request.setAttribute("success", true);
             request.getSession().removeAttribute("order");
-        }else{
+        } else {
             request.setAttribute("fail", true);
         }
         request.getRequestDispatcher("view/forUser/page/booking.jsp").forward(request, response);

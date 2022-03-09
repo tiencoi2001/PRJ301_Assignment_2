@@ -34,7 +34,7 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getSession().getAttribute("user") != null) {
-            response.getWriter().print("pls logout before");
+            response.sendRedirect(request.getContextPath() + "/home");
         } else {
             request.getRequestDispatcher("view/forUser/auth/login.jsp").forward(request, response);
         }
@@ -53,13 +53,17 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
+
         UserDBContext udbc = new UserDBContext();
         User user = udbc.getUser(username, password);
-        if(user != null){
+        if (user != null) {
             request.getSession().setAttribute("user", user);
-            response.sendRedirect("home");
-        }else{
+            if (user.getRole().equals("admin") || user.getRole().equals("staff")) {
+                response.sendRedirect(request.getContextPath() + "/admin");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/home");
+            }
+        } else {
             request.getSession().setAttribute("user", null);
             request.setAttribute("isFail", true);
             request.getRequestDispatcher("view/forUser/auth/login.jsp").forward(request, response);

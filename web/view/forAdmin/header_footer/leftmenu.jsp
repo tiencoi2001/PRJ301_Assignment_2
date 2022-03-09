@@ -35,23 +35,13 @@
                 </a>
             </li>
             <li>
-                <a href="${pageContext.request.contextPath}/admin/viewaccess">
-                    <i class="fa fa-check-circle"></i> <span>Order Detail</span>
-                </a>
-            </li>
-            <li>
                 <a href="${pageContext.request.contextPath}/admin/paid">
-                    <i class="fa fa-check-circle"></i> <span>Paid Invoices</span>
+                    <i class="fa fa-money"></i> <span>Paid Invoices</span>
                 </a>
             </li>
             <li>
                 <a href="${pageContext.request.contextPath}/admin/unpaid">
-                    <i class="fa fa-check-circle"></i> <span>Unpaid Invoices</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-gavel"></i> <span>General</span>
+                    <i class="fa fa-plus-circle"></i> <span>Unpaid Invoices</span>
                 </a>
             </li>
         </ul>

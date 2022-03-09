@@ -5,6 +5,7 @@
  */
 package dal;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Invoice;
+import model.Order;
 
 /**
  *
@@ -21,10 +23,36 @@ public class InvoiceDBContext extends DBContext {
 
     public Invoice getInvoiceByID(int id) {
         OrderDBContext odbc = new OrderDBContext();
+        RoomDBContext rdbc = new RoomDBContext();
         try {
             String sql = "SELECT [InvoiceID],[OrderID],[AccountID],[Price],[Paid]\n"
                     + "  FROM [Invoices]\n"
                     + "  where InvoiceID = ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Invoice invoice = new Invoice();
+                invoice.setInvoiceID(id);
+                invoice.setOrder(rdbc.getRoomsByOrderID(odbc.getOrderByID(rs.getInt(2))));
+                invoice.setAccountID(rs.getInt(3));
+                invoice.setPrice(rs.getDouble(4));
+                invoice.setPaid(rs.getBoolean(5));
+                return invoice;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public Invoice getInvoiceByOrderID(int id) {
+        OrderDBContext odbc = new OrderDBContext();
+        try {
+            String sql = "SELECT [InvoiceID],[OrderID],[AccountID],[Price],[Paid]\n"
+                    + "  FROM [Invoices]\n"
+                    + "  where OrderID = ?";
 
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
@@ -48,12 +76,11 @@ public class InvoiceDBContext extends DBContext {
         ArrayList<Invoice> invoices = new ArrayList<>();
         try {
             String sql = "select InvoiceID from \n"
-                    + "(select ROW_NUMBER() over (order by InvoiceID asc) as stt, InvoiceID\n"
+                    + "(select ROW_NUMBER() over (order by InvoiceID " + orderby + ") as stt, InvoiceID\n"
                     + "from Invoices\n"
-                    + "where Paid = ?) as t\n"
-                    + "where t.stt >= (? - 1) * ? + 1 and t.stt <= ? * ?\n"
-                    + "order by InvoiceID " + orderby;
-            System.out.println(sql);
+                    + "where Paid = ?"
+                    + ") as t\n"
+                    + "where t.stt >= (? - 1) * ? + 1 and t.stt <= ? * ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setBoolean(1, paid);
             stm.setInt(2, pageIndex);
@@ -73,10 +100,10 @@ public class InvoiceDBContext extends DBContext {
     }
 
     public int getTotalRows(boolean paid) {
-        String sql = "select InvoiceID from \n"
+        String sql = "select count(*) as total from\n"
                 + "(select ROW_NUMBER() over (order by InvoiceID asc) as stt, InvoiceID\n"
                 + "from Invoices\n"
-                + "where Paid = ?) as t\n";
+                + "where Paid = ?) as t";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setBoolean(1, paid);
@@ -88,5 +115,102 @@ public class InvoiceDBContext extends DBContext {
             Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
+    }
+
+    public void insertInvoice(Order order) {
+        try {
+            connection.setAutoCommit(false);
+            String sql = "INSERT INTO [Invoices]([OrderID],[AccountID],[Price],[Paid])\n"
+                    + "     VALUES (?,?,DATEDIFF(day, ?, ?) * (select price from RoomTypes where TypeID = ?) * ?,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, order.getOrderID());
+            if (order.getAccountID() != 0) {
+                stm.setInt(2, order.getAccountID());
+            } else {
+                stm.setString(2, null);
+            }
+            stm.setDate(3, order.getCheckIN());
+            stm.setDate(4, order.getCheckOUT());
+            stm.setInt(5, order.getRoomType().getId());
+            stm.setInt(6, order.getNumberOfRooms());
+            stm.setBoolean(7, false);
+            stm.executeUpdate();
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+        public void updateInvoice(Order order, Invoice invoice) {
+        try {
+            connection.setAutoCommit(false);
+            String sql = "UPDATE [Invoices]\n"
+                    + "   SET [Price] = DATEDIFF(day, ?, ?) * (select price from RoomTypes where TypeID = ?) * ?\n"
+                    + " WHERE InvoiceID = ?\n";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setDate(1, order.getCheckIN());
+            stm.setDate(2, order.getCheckOUT());
+            stm.setInt(3, order.getRoomType().getId());
+            stm.setInt(4, order.getNumberOfRooms());
+            stm.setInt(5, invoice.getInvoiceID());
+            stm.executeUpdate();
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void pay(int invoiceID) {
+        try {
+            connection.setAutoCommit(false);
+            String sql = "UPDATE [Invoices]\n"
+                    + "   SET [Paid] = 'true'\n"
+                    + " WHERE InvoiceID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, invoiceID);
+            stm.executeUpdate();
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        InvoiceDBContext idbc = new InvoiceDBContext();
+        int a = idbc.getTotalRows(true);
+        System.out.println(a);
     }
 }

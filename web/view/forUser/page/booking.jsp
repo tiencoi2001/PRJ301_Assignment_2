@@ -25,7 +25,7 @@
                     <div class="row gx-0">
                         <div class="col-lg-3 bg-dark d-none d-lg-block">
                             <a href="${pageContext.request.contextPath}/home" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
-                            <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
+                            <h1 class="m-0 text-primary text-uppercase">Queen Hotel</h1>
                         </a>
                     </div>
                     <div class="col-lg-9">
@@ -60,18 +60,11 @@
                             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                                 <div class="navbar-nav mr-auto py-0">
                                     <a href="${pageContext.request.contextPath}/home" class="nav-item nav-link">Home</a>
-                                    <a href="about.html" class="nav-item nav-link">About</a>
-                                    <a href="service.html" class="nav-item nav-link">Services</a>
-                                    <a href="room.html" class="nav-item nav-link">Rooms</a>
-                                    <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                        <div class="dropdown-menu rounded-0 m-0">
-                                            <a href="booking.html" class="dropdown-item">Booking</a>
-                                            <a href="team.html" class="dropdown-item">Our Team</a>
-                                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                        </div>
-                                    </div>
-                                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                                    <a href="#" class="nav-item nav-link">About</a>
+                                    <a href="#" class="nav-item nav-link">Services</a>
+                                    <a href="#" class="nav-item nav-link">Rooms</a>
+                                    <a href="${pageContext.request.contextPath}/booking" class="nav-item nav-link active">Booking</a>
+                                    <a href="#" class="nav-item nav-link">Contact</a>
                                 </div>
                                 <c:if test="${sessionScope.user == null}">
                                     <a href="${pageContext.request.contextPath}/login" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">Log in<i class="fa fa-arrow-right ms-3"></i></a>
@@ -91,12 +84,9 @@
                     <div class="row align-items-center">
                         <div class="col-lg-7 mb-5 mb-lg-0">
                             <div class="mb-4">
-                                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Need Any Courses</h5>
-                                <h1 class="text-white">30% Off For New Students</h1>
+                                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Queen Hotel</h5>
+                                <h1 class="text-white">Your satisfaction is our motivation</h1>
                             </div>
-                            <p class="text-white">Invidunt lorem justo sanctus clita. Erat lorem labore ea, justo dolor lorem ipsum ut sed eos,
-                                ipsum et dolor kasd sit ea justo. Erat justo sed sed diam. Ea et erat ut sed diam sea ipsum est
-                                dolor</p>
                             <ul class="list-inline text-white m-0">
                                 <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Good price</li>
                                 <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Safe booking</li>
@@ -134,7 +124,7 @@
                                             <select id="type" class="form-control" name="type">
                                                 <option value="0">----------Type Room----------</option>
                                                 <c:forEach items="${requestScope.typeList}" var="type">
-                                                    <option ${sessionScope.order.roomType.id eq type.id ? "selected=\"selected\"" : ""} value="${type.id}">${type.name} (${type.price}/day)</option>
+                                                    <option ${sessionScope.order.roomType.id eq type.id ? "selected=\"selected\"" : ""} value="${type.id}">${type.name} (${type.price}/night)</option>
                                                 </c:forEach>
                                             </select>
                                         </div>

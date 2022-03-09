@@ -5,10 +5,12 @@
  */
 package for_admin;
 
+import dal.InvoiceDBContext;
 import dal.OrderDBContext;
 import dal.RoomDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -62,8 +64,12 @@ public class ChooseRoomController extends HttpServlet {
         
         RoomDBContext rdbc = new RoomDBContext();
         OrderDBContext odbc = new OrderDBContext();
+        InvoiceDBContext idbc = new InvoiceDBContext();
+        
         rdbc.setRooms(orderID, rooms);
         Order order = odbc.getOrderByID(orderID);
+        idbc.insertInvoice(order);
+        
         request.setAttribute("order", order);
         request.setAttribute("tag", "done");
         request.getRequestDispatcher("../view/forAdmin/page/chooseroom.jsp").forward(request, response);

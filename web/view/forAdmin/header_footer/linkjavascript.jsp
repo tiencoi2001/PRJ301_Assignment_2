@@ -93,3 +93,12 @@
     });
     // Chart.defaults.global.responsive = true;
 </script>
+
+<script>
+    function changeStatus(id, status, url) {
+    var c = confirm("Do you sure that change status?");
+    if (c) {
+        window.location.href = url + "?id=" + id + "&status=" + status;
+    }
+}
+</script>

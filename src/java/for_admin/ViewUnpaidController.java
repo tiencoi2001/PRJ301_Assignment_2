@@ -44,14 +44,14 @@ public class ViewUnpaidController extends HttpServlet {
         int totalRows = idbc.getTotalRows(false);
         int totalPages = (totalRows % pageSize == 0) ? totalRows / pageSize : totalRows / pageSize + 1;
         ArrayList<Invoice> invoices = idbc.getListInvoice(false, pageSize, pageIndex, "asc");
-        String url = request.getContextPath() + "/admin/unpaid?pageIndex=" + pageIndex;
+        String url = request.getContextPath() + "/admin/unpaid?pageIndex=";
         
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("invoices", invoices);
         request.setAttribute("url", url);
         request.setAttribute("tag", "admin/unpaid");
-        request.getRequestDispatcher("../view/forAdmin/page/vieworder.jsp").forward(request, response);
+        request.getRequestDispatcher("../view/forAdmin/page/unpaid.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>filter.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>HomeController</servlet-name>
         <servlet-class>page.HomeController</servlet-class>
@@ -29,16 +37,8 @@
         <servlet-class>for_admin.AdminHomeController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AccessController</servlet-name>
-        <servlet-class>for_admin.AccessController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ViewOrderController</servlet-name>
         <servlet-class>for_admin.ViewOrderController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ViewAccessController</servlet-name>
-        <servlet-class>for_admin.ViewAccessController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewPaidController</servlet-name>
@@ -51,6 +51,30 @@
     <servlet>
         <servlet-name>ChooseRoomController</servlet-name>
         <servlet-class>for_admin.ChooseRoomController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddNewOrderController</servlet-name>
+        <servlet-class>for_admin.AddNewOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderDetailController</servlet-name>
+        <servlet-class>for_admin.OrderDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailController</servlet-name>
+        <servlet-class>page.DetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeRoomController</servlet-name>
+        <servlet-class>for_admin.ChangeRoomController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PayController</servlet-name>
+        <servlet-class>for_admin.PayController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TransactionHistoryController</servlet-name>
+        <servlet-class>page.TransactionHistoryController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
@@ -81,16 +105,8 @@
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AccessController</servlet-name>
-        <url-pattern>/admin/access</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ViewOrderController</servlet-name>
         <url-pattern>/admin/vieworder</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewAccessController</servlet-name>
-        <url-pattern>/admin/viewaccess</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewPaidController</servlet-name>
@@ -103,6 +119,30 @@
     <servlet-mapping>
         <servlet-name>ChooseRoomController</servlet-name>
         <url-pattern>/admin/chooseroom</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewOrderController</servlet-name>
+        <url-pattern>/admin/addneworder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderDetailController</servlet-name>
+        <url-pattern>/admin/orderdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailController</servlet-name>
+        <url-pattern>/detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeRoomController</servlet-name>
+        <url-pattern>/admin/changeroom</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayController</servlet-name>
+        <url-pattern>/admin/pay</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransactionHistoryController</servlet-name>
+        <url-pattern>/transactionhistory</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

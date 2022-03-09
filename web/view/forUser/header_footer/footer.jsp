@@ -13,9 +13,9 @@
         <div class="row g-5">
             <div class="col-md-6 col-lg-4">
                 <div class="bg-primary rounded p-4">
-                    <a href="home"><h1 class="text-white text-uppercase mb-3">Hotelier</h1></a>
-                    <p class="text-white mb-0">
-                        Download <a class="text-dark fw-medium" href="https://htmlcodex.com/hotel-html-template-pro">Hotelier ? Premium Version</a>, build a professional website for your hotel business and grab the attention of new visitors upon your site?s launch.
+                    <a href="home"><h1 class="text-white text-uppercase mb-3" style="font-style: italic">Queen Hotel</h1></a>
+                    <p class="mb-0" style="font-size: 20px; font-style: italic; color: black;">
+                        Experience the high-class way of life
                     </p>
                 </div>
             </div>
@@ -48,22 +48,6 @@
                         <a class="btn btn-link" href="">Sports & Gaming</a>
                         <a class="btn btn-link" href="">Event & Party</a>
                         <a class="btn btn-link" href="">GYM & Yoga</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="copyright">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <div class="footer-menu">
-                        <a href="">Home</a>
-                        <a href="">Cookies</a>
-                        <a href="">Help</a>
-                        <a href="">FQAs</a>
                     </div>
                 </div>
             </div>

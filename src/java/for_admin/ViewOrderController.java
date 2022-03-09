@@ -33,7 +33,9 @@ public class ViewOrderController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");  
         OrderDBContext odbc = new OrderDBContext();
+        String key = request.getParameter("key");
         int pageSize = 5;
         int pageIndex;
         String pageIndex_raw = request.getParameter("pageIndex");
@@ -57,20 +59,31 @@ public class ViewOrderController extends HttpServlet {
             checkOUT = Date.valueOf(raw_checkOUT);
         }
 
-        if (checkIN == null && checkOUT == null) {
-            orders = odbc.getListOrder(false, null, null, pageSize, pageIndex, "asc");
-            totalRows = odbc.getTotalRows(false, null, null);
+        if (checkIN == null && checkOUT == null && key == null) {
+            orders = odbc.getListOrder(false, null, null, pageSize, pageIndex, "asc", key);
+            totalRows = odbc.getTotalRows(false, null, null, key);
             url = request.getContextPath() + "/admin/vieworder?pageIndex=";
         } else {
-            orders = odbc.getListOrder(false, checkIN, checkOUT, pageSize, pageIndex, "asc");
-            totalRows = odbc.getTotalRows(false, checkIN, checkOUT);
-            url = request.getContextPath() + "/admin/vieworder?checkIn=" + checkIN + "&checkOUT=" + checkOUT + "&pageIndex=";
+            orders = odbc.getListOrder(false, checkIN, checkOUT, pageSize, pageIndex, "asc", key);
+            totalRows = odbc.getTotalRows(false, checkIN, checkOUT, key);
+            url = request.getContextPath() + "/admin/viewaccess?";
+            if (checkIN != null) {
+                url += "checkIN=" + checkIN + "&";
+            }
+            if (checkOUT != null) {
+                url += "checkOUT=" + checkOUT + "&";
+            }
+            if (key != null) {
+                url += "key=" + key + "&";
+            }
+            url += "pageIndex=";
             request.setAttribute("checkIN", checkIN);
             request.setAttribute("checkOUT", checkOUT);
         }
 
         int totalPages = (totalRows % pageSize == 0) ? totalRows / pageSize : totalRows / pageSize + 1;
 
+        request.setAttribute("key", key);
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("orders", orders);

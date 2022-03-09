@@ -52,26 +52,19 @@
                         </div>
                         <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
                             <a href="${pageContext.request.contextPath}/home" class="navbar-brand d-block d-lg-none">
-                                <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
+                                <h1 class="m-0 text-primary text-uppercase">Queen Hotel</h1>
                             </a>
                             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                                 <div class="navbar-nav mr-auto py-0">
-                                    <a href="${pageContext.request.contextPath}/home" class="nav-item nav-link active">Home</a>
-                                    <a href="about.html" class="nav-item nav-link">About</a>
-                                    <a href="service.html" class="nav-item nav-link">Services</a>
-                                    <a href="room.html" class="nav-item nav-link">Rooms</a>
-                                    <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                        <div class="dropdown-menu rounded-0 m-0">
-                                            <a href="booking.html" class="dropdown-item">Booking</a>
-                                            <a href="team.html" class="dropdown-item">Our Team</a>
-                                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                        </div>
-                                    </div>
-                                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                                    <a href="${pageContext.request.contextPath}/home" class="nav-item nav-link">Home</a>
+                                    <a href="#" class="nav-item nav-link">About</a>
+                                    <a href="#" class="nav-item nav-link">Services</a>
+                                    <a href="#" class="nav-item nav-link">Rooms</a>
+                                    <a href="${pageContext.request.contextPath}/booking" class="nav-item nav-link">Booking</a>
+                                    <a href="#" class="nav-item nav-link">Contact</a>
                                 </div>
                                 <c:if test="${sessionScope.user == null}">
                                     <a href="${pageContext.request.contextPath}/login" class="btn btn-primary rounded-0 py-4 px-md-5 d-none d-lg-block">Log in<i class="fa fa-arrow-right ms-3"></i></a>

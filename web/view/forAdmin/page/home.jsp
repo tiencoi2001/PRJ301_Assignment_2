@@ -14,7 +14,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Users List</title>
+        <title>Queen hotel</title>
         <jsp:include page="../header_footer/linkcss.jsp"></jsp:include>
         </head>
         <body class="skin-black">

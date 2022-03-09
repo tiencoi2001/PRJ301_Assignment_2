@@ -14,7 +14,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Users List</title>
+        <title>Order wait</title>
         <jsp:include page="../header_footer/linkcss.jsp"></jsp:include>
         </head>
         <body class="skin-black">
@@ -31,39 +31,81 @@
                                         <div style="margin-right: 70%;">List of order wait</div>
                                         <div>
                                             <a class="btn label-danger center-block col-sm-10" style="width: 100%;margin-left: 68%;" href="${pageContext.request.contextPath}/admin/addneworder">Add new order</a>
-                                        </div>
                                     </div>
-                                    <div class="box-tools m-b-15" style="float: right;">
-                                        <div class="input-group">
-                                            <form action="${pageContext.request.contextPath}/admin/vieworder" method="post">
-                                                <input type="text" name="key" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" value="" />
-                                                <button class="btn btn-sm btn-default" type="submit"><i class="fa fa-search"></i> </button>                                             
-                                            </form>
-                                        </div>
+                                </div>
+                                <div class="box-tools m-b-15" style="float: right;">
+                                    <div class="input-group">
+                                        <form action="${pageContext.request.contextPath}/admin/vieworder" method="post">
+                                            <input type="text" name="key" class="form-control input-sm pull-right" style="width: 150px;" placeholder="Search" value="${requestScope.key}" />
+                                            <button class="btn btn-sm btn-default" type="submit"><i class="fa fa-search"></i> </button>                                             
+                                        </form>
                                     </div>
-                                <c:if test="${requestScope.orders.isEmpty()}">
-                                    <h3>Not Found Any Order</h3>
-                                </c:if>
-                                <c:if test="${!requestScope.orders.isEmpty()}">
-                                    <div class="panel-body table-responsive">
-                                        <table class="table table-hover">
-                                            <tr>
-                                                <td>ID</td>
-                                                <td>Number of rooms</td>
-                                                <td>Type</td>
-                                                <td>Choose room(s)</td>
-                                            </tr>
-                                            <c:forEach items="${requestScope.orders}" var="o">
+                                </div>
+                                <form>
+                                    <c:if test="${requestScope.orders.isEmpty()}">
+                                        <h3>Not Found Any Order</h3>
+                                    </c:if>
+                                    <c:if test="${!requestScope.orders.isEmpty()}">
+                                        <div class="panel-body table-responsive">
+                                            <table class="table table-hover">
                                                 <tr>
-                                                    <td>${o.orderID}</td>
-                                                    <td>${o.numberOfRooms}</td>
-                                                    <td>${o.roomType.name}</td>
-                                                    <td><a href="${pageContext.request.contextPath}/admin/chooseroom?orderID=${o.orderID}">Choose room(s)</a></td>
+                                                    <td>ID</td>
+                                                    <td>Full name</td>
+                                                    <td>Number of rooms</td>
+                                                    <td>Type</td>
+                                                    <td>CheckIN
+                                                        <input class="input-sm" type="date" name="checkIN" value="${requestScope.checkIN}">
+                                                    </td>
+                                                    <td>CheckOUT
+                                                        <input class="input-sm" type="date" name="checkOUT" value="${requestScope.checkOUT}">
+                                                    </td>
+                                                    <td>Update</td>
+                                                    <td><button class="btn btn-info center-block" type="submit">Apply</button></td>
                                                 </tr>
-                                            </c:forEach>
-                                        </table>
-                                    </div>
-                                </c:if>
+                                                <c:forEach items="${requestScope.orders}" var="o">
+                                                    <tr>
+                                                        <td>${o.orderID}</td>
+                                                        <td>${o.name}</td>
+                                                        <td>${o.numberOfRooms}</td>
+                                                        <td>${o.roomType.name}</td>
+                                                        <td>${o.checkIN}</td>
+                                                        <td>${o.checkOUT}</td>
+                                                        <td><a href="${pageContext.request.contextPath}/admin/orderdetail?orderID=${o.orderID}">Update</a></td>
+                                                        <td><a href="${pageContext.request.contextPath}/admin/chooseroom?orderID=${o.orderID}">Choose room(s)</a></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </table>
+
+                                        </div>
+                                    </c:if>
+                                </form>
+                                <div>
+                                    <nav aria-label="Page navigation example">
+                                        <ul id="paggingBottom" class="pagination page">
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <script>
+                                    generatePagger('paggingBottom',${requestScope.pageIndex},${requestScope.totalPages}, '${requestScope.url}', 1);
+                                    function generatePagger(div, pageIndex, totalPages, url, gap) {
+                                        var container = document.getElementById(div);
+                                        container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + 1 + '">First</a></li>';
+                                        if (pageIndex - gap > 0)
+                                            container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + (pageIndex - 1) + '">Previous</a></li>';
+                                        for (var i = (pageIndex) - gap; i < pageIndex; i++) {
+                                            if (i > 0)
+                                                container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + i + '">' + i + '</a></li>';
+                                        }
+                                        container.innerHTML += '<li class="page-item active"><span class="page-link">' + pageIndex + '</span></li>';
+                                        for (var i = (pageIndex) + 1; i <= pageIndex + gap; i++) {
+                                            if (i <= totalPages)
+                                                container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + i + '">' + i + '</a></li>';
+                                        }
+                                        if (pageIndex < totalPages)
+                                            container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + (pageIndex + 1) + '">Next</a></li>';
+                                        container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + totalPages + '">Last</a></li>';
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>

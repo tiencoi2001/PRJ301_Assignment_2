@@ -6,6 +6,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,11 +24,12 @@ public class Order {
     private int numberOfRooms;
     private RoomType roomType;
     private boolean access;
+    private ArrayList<Room> rooms;
 
     public Order() {
     }
 
-    public Order(int orderID, int accountID, Date checkIN, Date checkOUT, String name, String email, String phone, int numberOfRooms, RoomType roomType, boolean access) {
+    public Order(int orderID, int accountID, Date checkIN, Date checkOUT, String name, String email, String phone, int numberOfRooms, RoomType roomType, boolean access, ArrayList<Room> rooms) {
         this.orderID = orderID;
         this.accountID = accountID;
         this.checkIN = checkIN;
@@ -38,6 +40,7 @@ public class Order {
         this.numberOfRooms = numberOfRooms;
         this.roomType = roomType;
         this.access = access;
+        this.rooms = rooms;
     }
 
     public int getOrderID() {
@@ -118,6 +121,14 @@ public class Order {
 
     public void setAccess(boolean access) {
         this.access = access;
+    }
+
+    public ArrayList<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(ArrayList<Room> rooms) {
+        this.rooms = rooms;
     }
 
     @Override

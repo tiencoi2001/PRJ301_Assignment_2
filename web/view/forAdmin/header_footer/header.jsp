@@ -5,6 +5,7 @@
 --%>
 
 <!-- header logo: style can be found in header.less -->
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <header class="header">
     <a href="#" class="logo">
         <!-- Add the class icon to your logo image or logo icon to add the margining -->

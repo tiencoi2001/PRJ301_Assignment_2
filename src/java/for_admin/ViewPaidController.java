@@ -44,7 +44,7 @@ public class ViewPaidController extends HttpServlet {
         int totalRows = idbc.getTotalRows(true);
         int totalPages = (totalRows % pageSize == 0) ? totalRows / pageSize : totalRows / pageSize + 1;
         ArrayList<Invoice> invoices = idbc.getListInvoice(true, pageSize, pageIndex, "desc");
-        String url = request.getContextPath() + "/admin/paid?pageIndex=" + pageIndex;
+        String url = request.getContextPath() + "/admin/paid?pageIndex=";
         
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("totalPages", totalPages);
