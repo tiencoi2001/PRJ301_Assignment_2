@@ -1,6 +1,6 @@
 <%-- 
-    Document   : transactionhistory
-    Created on : Mar 2, 2022, 5:10:41 PM
+    Document   : detail
+    Created on : Mar 10, 2022, 12:15:54 PM
     Author     : Vu Duc Tien
 --%>
 
@@ -92,32 +92,28 @@
                                     <table>
                                         <tr>
                                             <td>ID</td>
-                                            <td>Name</td>
-                                            <td>Email</td>
-                                            <td>Phone</td>
                                             <td>Type</td>
                                             <td>Number of rooms</td>
+                                            <td>Rooms</td>
                                             <td>CheckIN</td>
                                             <td>CheckOUT</td>
-                                            <td>Access</td>
-                                            <td>Detail</td>
+                                            <td>Price</td>
+                                            <td>Paid</td>
                                         </tr>
-                                        <c:forEach items="${requestScope.orders}" var="o">
-                                            <tr>
-                                                <td>${o.orderID}</td>
-                                                <td>${o.name}</td>
-                                                <td>${o.email}</td>
-                                                <td>${o.phone}</td>
-                                                <td>${o.roomType.name}</td>
-                                                <td>${o.numberOfRooms}</td>
-                                                <td>${o.checkIN}</td>
-                                                <td>${o.checkOUT}</td>
-                                                <td>${o.access}</td>
-                                                <c:if test="${o.access}">
-                                                    <td><a href="${pageContext.request.contextPath}/detail?orderID=${o.orderID}" style="color: blue">Detail</a></td>
-                                                </c:if>
-                                            </tr>
-                                        </c:forEach>
+                                        <tr>
+                                            <td>${requestScope.invoice.order.orderID}</td>
+                                            <td>${requestScope.invoice.order.roomType.name}</td>
+                                            <td>${requestScope.invoice.order.numberOfRooms}</td>
+                                            <td>
+                                                <c:forEach items="${requestScope.invoice.order.rooms}" var="r">
+                                                    ${r.name}
+                                                </c:forEach>
+                                            </td>
+                                            <td>${requestScope.invoice.order.checkIN}</td>
+                                            <td>${requestScope.invoice.order.checkOUT}</td>
+                                            <td>${requestScope.invoice.price}</td>
+                                            <td>${requestScope.invoice.paid}</td>
+                                        </tr>
                                     </table>
                                     <style>
                                         table, tr, td{
@@ -130,33 +126,6 @@
                                             width: 20%; 
                                         }
                                     </style>
-                                    <div>
-                                        <nav aria-label="Page navigation example">
-                                            <ul id="paggingBottom" class="pagination page">
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                    <script>
-                                        generatePagger('paggingBottom',${requestScope.pageIndex},${requestScope.totalPages}, '${requestScope.url}', 1);
-                                        function generatePagger(div, pageIndex, totalPages, url, gap) {
-                                            var container = document.getElementById(div);
-                                            container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + 1 + '">First</a></li>';
-                                            if (pageIndex - gap > 0)
-                                                container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + (pageIndex - 1) + '">Previous</a></li>';
-                                            for (var i = (pageIndex) - gap; i < pageIndex; i++) {
-                                                if (i > 0)
-                                                    container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + i + '">' + i + '</a></li>';
-                                            }
-                                            container.innerHTML += '<li class="page-item active"><span class="page-link">' + pageIndex + '</span></li>';
-                                            for (var i = (pageIndex) + 1; i <= pageIndex + gap; i++) {
-                                                if (i <= totalPages)
-                                                    container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + i + '">' + i + '</a></li>';
-                                            }
-                                            if (pageIndex < totalPages)
-                                                container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + (pageIndex + 1) + '">Next</a></li>';
-                                            container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + totalPages + '">Last</a></li>';
-                                        }
-                                    </script>
                                 </div>
                             </div>
                         </div>

@@ -40,15 +40,15 @@ public class DetailController extends BaseRequiredAuthController {
         OrderDBContext odbc = new OrderDBContext();
         RoomDBContext rdbc = new RoomDBContext();
         InvoiceDBContext idbc = new InvoiceDBContext();
-        User user = (User) request.getSession().getAttribute("user");
-        ArrayList<Order> orders = odbc.getOrderByAccountID(user.getId());
         
-        ArrayList<Invoice> invoices = new ArrayList<>();
-        for (Order order : orders) {
-            order = rdbc.getRoomsByOrderID(order);
-            invoices.add(idbc.getInvoiceByOrderID(order.getAccountID()));
-        }
+        int orderID = Integer.parseInt(request.getParameter("orderID"));
         
+        Order order = odbc.getOrderByID(orderID);
+        Invoice invoice = idbc.getInvoiceByOrderID(orderID);
+        invoice.setOrder(rdbc.getRoomsByOrderID(order));
+        
+        request.setAttribute("invoice", invoice);
+        request.getRequestDispatcher("view/forUser/page/detail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

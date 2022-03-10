@@ -5,18 +5,25 @@
  */
 package page;
 
+import auth.BaseRequiredAuthController;
+import dal.InvoiceDBContext;
+import dal.OrderDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Invoice;
+import model.Order;
+import model.User;
 
 /**
  *
  * @author Vu Duc Tien
  */
-public class TransactionHistoryController extends HttpServlet {
+public class TransactionHistoryController extends BaseRequiredAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,19 +36,27 @@ public class TransactionHistoryController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet TransactionHistoryController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet TransactionHistoryController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        User user = (User) request.getSession().getAttribute("user");
+        OrderDBContext odbc = new OrderDBContext();
+        int pageSize = 5;
+        int pageIndex;
+        String pageIndex_raw = request.getParameter("pageIndex");
+        if (pageIndex_raw == null) {
+            pageIndex = 1;
+        } else {
+            pageIndex = Integer.parseInt(pageIndex_raw);
         }
+        int totalRows = odbc.getTotalRowsForUser(user.getId());
+        int totalPages = (totalRows % pageSize == 0) ? totalRows / pageSize : totalRows / pageSize + 1;
+        ArrayList<Order> orders = odbc.getListOrderForUser(user.getId(), pageSize, pageIndex);
+        String url = request.getContextPath() + "/transactionhistory?pageIndex=";
+
+        request.setAttribute("pageIndex", pageIndex);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("orders", orders);
+        request.setAttribute("url", url);
+        request.setAttribute("tag", "transactionhistory");
+        request.getRequestDispatcher("view/forUser/page/transactionhistory.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -54,7 +69,7 @@ public class TransactionHistoryController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -68,7 +83,7 @@ public class TransactionHistoryController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

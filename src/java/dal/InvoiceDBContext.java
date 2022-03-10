@@ -71,6 +71,34 @@ public class InvoiceDBContext extends DBContext {
         }
         return null;
     }
+    
+    public ArrayList<Invoice> getInvoiceByAccountID(int id) {
+        ArrayList<Invoice> invoices = new ArrayList<>();
+        OrderDBContext odbc = new OrderDBContext();
+        RoomDBContext rdbc = new RoomDBContext();
+        try {
+            String sql = "SELECT [InvoiceID],[OrderID],[AccountID],[Price],[Paid]\n"
+                    + "  FROM [Invoices]\n"
+                    + "  where AccountID = ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Invoice invoice = new Invoice();
+                invoice.setInvoiceID(id);
+                invoice.setOrder(rdbc.getRoomsByOrderID(odbc.getOrderByID(rs.getInt(2))));
+                invoice.setAccountID(rs.getInt(3));
+                invoice.setPrice(rs.getDouble(4));
+                invoice.setPaid(rs.getBoolean(5));
+                invoices.add(invoice);
+            }
+            return invoices;
+        } catch (SQLException ex) {
+            Logger.getLogger(InvoiceDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public ArrayList<Invoice> getListInvoice(boolean paid, int pageSize, int pageIndex, String orderby) {
         ArrayList<Invoice> invoices = new ArrayList<>();

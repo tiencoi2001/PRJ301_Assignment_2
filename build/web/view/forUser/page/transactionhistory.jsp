@@ -82,47 +82,81 @@
             <div class="container-login bg-registration py-5">
                 <div class="container py-5">
                     <div class="row align-items-center">
-                        <div class="col-lg-3 mb-5 mb-lg-0">
-                        </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="card border-0">
                                 <div class="card-header bg-light text-center p-4" style="display: flex">
                                     <div class="form-header form-active col-lg-6" style="margin: auto 0"><a href="${pageContext.request.contextPath}/profile"><h1 class="m-0">Profile</h1></a></div>
                                     <div class="form-header col-lg-6"><a href="${pageContext.request.contextPath}/transactionhistory"><h1 class="m-0">Transaction history</h1></a></div>
                                 </div>
                                 <div class="card-body rounded-bottom bg-primary p-5">
-                                    <form action="booking" method="post" id="bookingform">
-                                        <input type="hidden" name="accountID" value="${sessionScope.user.id}">
-                                        <div class="form-group">
-                                            <input name="username" type="text" class="form-control border-0 p-4" placeholder="Username" value="${sessionScope.user.username}" disabled required="required" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input name="password" type="password" class="form-control border-0 p-4" placeholder="Password" value="${sessionScope.user.password}" required="required" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input name="name" type="text" class="form-control border-0 p-4" placeholder="Fullname" value="${sessionScope.user.name}" required="required" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input name="email" type="email" class="form-control border-0 p-4" placeholder="Email" value="${sessionScope.user.email}" required="required" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input name="phone" type="tel" class="form-control border-0 p-4" placeholder="Phone" value="${sessionScope.user.phone}" required="required" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input name="dob" type="date" class="form-control border-0 p-4" placeholder="Date of birth" value="${sessionScope.user.dob}" required="required" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input name="address" type="text" class="form-control border-0 p-4" placeholder="Address" value="${sessionScope.user.address}" required="required" />
-                                        </div>
-                                        <div>
-                                            <button class="btn btn-dark btn-block border-0 py-3" type="submit">Update</button>
-                                        </div>
-                                        <div>
-                                            <c:if test="${requestScope.success == true}">
-                                                <p>Update successful!</p>
-                                            </c:if>
-                                        </div>
-                                    </form>
+                                    <table>
+                                        <tr>
+                                            <td>ID</td>
+                                            <td>Name</td>
+                                            <td>Email</td>
+                                            <td>Phone</td>
+                                            <td>Type</td>
+                                            <td>Number of rooms</td>
+                                            <td>CheckIN</td>
+                                            <td>CheckOUT</td>
+                                            <td>Access</td>
+                                            <td>Detail</td>
+                                        </tr>
+                                        <c:forEach items="${requestScope.orders}" var="o">
+                                            <tr>
+                                                <td>${o.orderID}</td>
+                                                <td>${o.name}</td>
+                                                <td>${o.email}</td>
+                                                <td>${o.phone}</td>
+                                                <td>${o.roomType.name}</td>
+                                                <td>${o.numberOfRooms}</td>
+                                                <td>${o.checkIN}</td>
+                                                <td>${o.checkOUT}</td>
+                                                <td>${o.access}</td>
+                                                <c:if test="${o.access}">
+                                                    <td><a href="${pageContext.request.contextPath}/detail?orderID=${o.orderID}" style="color: blue">Detail</a></td>
+                                                </c:if>
+                                            </tr>
+                                        </c:forEach>
+                                    </table>
+                                    <style>
+                                        table, tr, td{
+                                            border: solid 3px;
+                                            text-align: center;
+                                            border-color: black;
+                                            background-color: white;
+                                        }
+                                        td{
+                                            width: 20%; 
+                                        }
+                                    </style>
+                                    <div>
+                                        <nav aria-label="Page navigation example">
+                                            <ul id="paggingBottom" class="pagination page">
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <script>
+                                        generatePagger('paggingBottom',${requestScope.pageIndex},${requestScope.totalPages}, '${requestScope.url}', 1);
+                                        function generatePagger(div, pageIndex, totalPages, url, gap) {
+                                            var container = document.getElementById(div);
+                                            container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + 1 + '">First</a></li>';
+                                            if (pageIndex - gap > 0)
+                                                container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + (pageIndex - 1) + '">Previous</a></li>';
+                                            for (var i = (pageIndex) - gap; i < pageIndex; i++) {
+                                                if (i > 0)
+                                                    container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + i + '">' + i + '</a></li>';
+                                            }
+                                            container.innerHTML += '<li class="page-item active"><span class="page-link">' + pageIndex + '</span></li>';
+                                            for (var i = (pageIndex) + 1; i <= pageIndex + gap; i++) {
+                                                if (i <= totalPages)
+                                                    container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + i + '">' + i + '</a></li>';
+                                            }
+                                            if (pageIndex < totalPages)
+                                                container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + (pageIndex + 1) + '">Next</a></li>';
+                                            container.innerHTML += '<li class="page-item"><a class="page-link" href="' + url + totalPages + '">Last</a></li>';
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </div>

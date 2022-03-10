@@ -57,7 +57,7 @@ public class OrderDBContext extends DBContext {
         }
         return null;
     }
-    
+
     public ArrayList<Order> getOrderByAccountID(int id) {
         ArrayList<Order> orders = new ArrayList<>();
         try {
@@ -250,6 +250,54 @@ public class OrderDBContext extends DBContext {
         return -1;
     }
 
+    public ArrayList<Order> getListOrderForUser(int accountID, int pageSize, int pageIndex) {
+        ArrayList<Order> orders = new ArrayList<>();
+        try {
+            String sql = "select OrderID from\n"
+                    + "(select ROW_NUMBER() over (order by OrderID asc) as stt, OrderID\n"
+                    + "from Orders\n"
+                    + "where AccountID = ?\n"
+                    + ") as t\n"
+                    + "where t.stt >= (? - 1) * ? + 1 and t.stt <= ? * ?\n";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, accountID);
+            stm.setInt(2, pageIndex);
+            stm.setInt(3, pageSize);
+            stm.setInt(4, pageIndex);
+            stm.setInt(5, pageSize);
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Order order = getOrderByID(rs.getInt(1));
+                orders.add(order);
+            }
+            return orders;
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public int getTotalRowsForUser(int accountID) {
+        String sql = "select count(*) as total from\n"
+                + "(select ROW_NUMBER() over (order by OrderID asc) as stt\n"
+                + "from Orders\n"
+                + "where AccountID = ?\n"
+                + ") as t\n";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, accountID);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
     public boolean insertOrder(Order order) {
         try {
             connection.setAutoCommit(false);
@@ -334,18 +382,9 @@ public class OrderDBContext extends DBContext {
 
     public static void main(String[] args) {
         OrderDBContext odbc = new OrderDBContext();
-        ArrayList<Order> orders = new ArrayList<>();
-//        orders = odbc.getListOrder(true, Date.valueOf("2022-04-05"), Date.valueOf("2022-04-10"),1,1);
-//        orders = odbc.getListOrder(true, null, null, 3, 1, "asc", "mra@gmail.com");
-//        for (Order order : orders) {
-//            System.out.println(order.toString());
-//        }
-        Order order = odbc.getOrderByID(7);
-        order.setNumberOfRooms(3);
-        if(odbc.updateOrder(order)){
-            System.out.println("done");
-        }else{
-            System.out.println("fail");
+        ArrayList<Order> orders = odbc.getListOrderForUser(1, 5, 1);
+        for (Order order : orders) {
+            System.out.println(order.getCheckIN() + " " + order.getCheckOUT());
         }
     }
 }

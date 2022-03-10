@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forAdmin/page/orderdetail.jsp</file>
-            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/src/java/dal/RoomDBContext.java</file>
-            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forAdmin/page/changeroom.jsp</file>
-            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forAdmin/page/chooseroom.jsp</file>
+            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/src/java/for_admin/ViewPaidController.java</file>
+            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/src/java/page/DetailController.java</file>
             <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/src/java/dal/OrderDBContext.java</file>
-            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/src/java/for_admin/OrderDetailController.java</file>
-            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/src/java/for_admin/ChangeRoomController.java</file>
+            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forAdmin/page/paid.jsp</file>
+            <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/web/view/forUser/page/transactionhistory.jsp</file>
             <file>file:/C:/Users/tien/Documents/NetBeansProjects/WEB/PRJ301_Assignment/src/java/dal/InvoiceDBContext.java</file>
         </group>
     </open-files>

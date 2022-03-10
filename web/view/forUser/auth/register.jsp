@@ -25,7 +25,7 @@
                     <div class="row gx-0">
                         <div class="col-lg-3 bg-dark d-none d-lg-block">
                             <a href="home" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
-                                <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
+                                <h1 class="m-0 text-primary text-uppercase">Queen hotel</h1>
                             </a>
                         </div>
                         <div class="col-lg-9">
@@ -77,12 +77,9 @@
                         <div class="row align-items-center">
                             <div class="col-lg-7 mb-5 mb-lg-0">
                                 <div class="mb-4">
-                                    <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Need Any Courses</h5>
-                                    <h1 class="text-white">30% Off For New Students</h1>
+                                    <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Queen Hotel</h5>
+                                    <h1 class="text-white">Your satisfaction is our motivation</h1>
                                 </div>
-                                <p class="text-white">Invidunt lorem justo sanctus clita. Erat lorem labore ea, justo dolor lorem ipsum ut sed eos,
-                                    ipsum et dolor kasd sit ea justo. Erat justo sed sed diam. Ea et erat ut sed diam sea ipsum est
-                                    dolor</p>
                                 <ul class="list-inline text-white m-0">
                                     <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Good price</li>
                                     <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Safe booking</li>

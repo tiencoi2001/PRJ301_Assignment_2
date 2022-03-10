@@ -43,7 +43,7 @@
                             </div>
                             <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3 p-lg-0">
                                 <a href="${pageContext.request.contextPath}/home" class="navbar-brand d-block d-lg-none">
-                                    <h1 class="m-0 text-primary text-uppercase">Hotelier</h1>
+                                    <h1 class="m-0 text-primary text-uppercase">Queen hotel</h1>
                                 </a>
                                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                                     <span class="navbar-toggler-icon"></span>
@@ -82,12 +82,9 @@
                     <div class="row align-items-center">
                         <div class="col-lg-7 mb-5 mb-lg-0">
                             <div class="mb-4">
-                                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Need Any Courses</h5>
-                                <h1 class="text-white">30% Off For New Students</h1>
+                                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Queen hotel</h5>
+                                <h1 class="text-white">Your satisfaction is our motivation</h1>
                             </div>
-                            <p class="text-white">Invidunt lorem justo sanctus clita. Erat lorem labore ea, justo dolor lorem ipsum ut sed eos,
-                                ipsum et dolor kasd sit ea justo. Erat justo sed sed diam. Ea et erat ut sed diam sea ipsum est
-                                dolor</p>
                             <ul class="list-inline text-white m-0">
                                 <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Good price</li>
                                 <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Safe booking</li>
