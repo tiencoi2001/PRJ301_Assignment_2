@@ -47,6 +47,7 @@
                                                     <td>CheckIN</td>
                                                     <td>CheckOUT</td>
                                                     <td>Room(s)</td>
+                                                    <td>Change Room</td>
                                                     <td>Price</td>
                                                     <td>Paid</td>
                                                 </tr>
@@ -63,6 +64,7 @@
                                                                 ${r.name}
                                                             </c:forEach>
                                                         </td>
+                                                        <td><a href="${pageContext.request.contextPath}/admin/changeroom?orderID=${i.order.orderID}">Change</a></td>
                                                         <td>${i.price}</td>
                                                         <td><a href="${pageContext.request.contextPath}/admin/pay?invoiceID=${i.invoiceID}">Paid</a></td>
                                                     </tr>
