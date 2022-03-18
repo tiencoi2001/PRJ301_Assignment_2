@@ -72,7 +72,7 @@
                                     <input type="text" class="form-control" value="${requestScope.order.checkOUT}" disabled required placeholder="Check out">
                                 </div>
                             </div>
-                            <c:if test="${!requestScope.rooms.isEmpty()}">
+                            <c:if test="${requestScope.rooms.size() > 0}">
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2 control-label">Choose rooms:</label>
                                     <div class="col-sm-10" style="margin-top: 1%;">
@@ -96,15 +96,23 @@
                             <div class="col-sm-12">
                                 <div class="col-sm-4">
                                 </div>
-                                <div class="col-sm-2">
-                                    <button type="button" class="btn btn-danger center-block col-sm-10"
-                                            onclick="location.href = '${pageContext.request.contextPath}/admin/vieworder'">
-                                        Discard
-                                    </button>
-                                </div>
-                                <div class="col-sm-2">
-                                    <button type="button" onclick="checkNumberOfRooms()" class="btn btn-info center-block col-sm-10">Save</button>
-                                </div>
+                                <c:if test="${!requestScope.noroom}">
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-danger center-block col-sm-10"
+                                                onclick="location.href = '${pageContext.request.contextPath}/admin/vieworder'">
+                                            Discard
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="button" onclick="checkNumberOfRooms()" class="btn btn-info center-block col-sm-10">Save</button>
+                                    </div>
+                                </c:if>
+                                <c:if test="${requestScope.noroom}">
+                                    <div class="col-sm-3">
+                                        <p style="color: red;">Not enough room</p>
+                                        <button type="button" onclick="location.href = '${pageContext.request.contextPath}/admin/reject?orderID=${requestScope.order.orderID}'" class="btn btn-danger center-block col-sm-10">Reject</button>
+                                    </div>
+                                </c:if>
                             </div>
                         </form>
                         <script>

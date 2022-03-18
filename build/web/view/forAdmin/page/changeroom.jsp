@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <button type="button" class="btn btn-danger center-block col-sm-10"
-                                            onclick="location.href = '${pageContext.request.contextPath}/admin/viewaccess'">
+                                            onclick="location.href = '${pageContext.request.contextPath}/admin/unpaid'">
                                         Discard
                                     </button>
                                 </div>

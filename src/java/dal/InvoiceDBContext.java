@@ -71,7 +71,7 @@ public class InvoiceDBContext extends DBContext {
         }
         return null;
     }
-    
+
     public ArrayList<Invoice> getInvoiceByAccountID(int id) {
         ArrayList<Invoice> invoices = new ArrayList<>();
         OrderDBContext odbc = new OrderDBContext();
@@ -162,36 +162,6 @@ public class InvoiceDBContext extends DBContext {
             stm.setInt(5, order.getRoomType().getId());
             stm.setInt(6, order.getNumberOfRooms());
             stm.setBoolean(7, false);
-            stm.executeUpdate();
-            connection.commit();
-        } catch (SQLException ex) {
-            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
-            try {
-                connection.rollback();
-            } catch (SQLException ex1) {
-                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException ex) {
-                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
-        public void updateInvoice(Order order, Invoice invoice) {
-        try {
-            connection.setAutoCommit(false);
-            String sql = "UPDATE [Invoices]\n"
-                    + "   SET [Price] = DATEDIFF(day, ?, ?) * (select price from RoomTypes where TypeID = ?) * ?\n"
-                    + " WHERE InvoiceID = ?\n";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setDate(1, order.getCheckIN());
-            stm.setDate(2, order.getCheckOUT());
-            stm.setInt(3, order.getRoomType().getId());
-            stm.setInt(4, order.getNumberOfRooms());
-            stm.setInt(5, invoice.getInvoiceID());
             stm.executeUpdate();
             connection.commit();
         } catch (SQLException ex) {

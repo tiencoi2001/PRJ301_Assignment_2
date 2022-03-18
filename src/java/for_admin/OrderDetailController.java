@@ -66,6 +66,8 @@ public class OrderDetailController extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
+        Date checkIN = Date.valueOf(request.getParameter("checkIN"));
+        Date checkOUT = Date.valueOf(request.getParameter("checkOUT"));
         int numberOfRooms = Integer.parseInt(request.getParameter("numberOfRooms"));
         int typeID = Integer.parseInt(request.getParameter("type"));
 
@@ -74,6 +76,8 @@ public class OrderDetailController extends HttpServlet {
         order.setName(name);
         order.setEmail(email);
         order.setPhone(phone);
+        order.setCheckIN(checkIN);
+        order.setCheckOUT(checkOUT);
         order.setNumberOfRooms(numberOfRooms);
 
         RoomType rt = new RoomType();
@@ -88,13 +92,11 @@ public class OrderDetailController extends HttpServlet {
         if (odbc.updateOrder(order)) {
             request.setAttribute("tag", "done");
             InvoiceDBContext idbc = new InvoiceDBContext();
-            Invoice invoice = idbc.getInvoiceByOrderID(orderID);
-            idbc.updateInvoice(order, invoice);
         } else {
             request.setAttribute("tag", "fail");
         }
         request.setAttribute("order", order);
-        request.getRequestDispatcher("../view/forAdmin/page/detail.jsp").forward(request, response);
+        request.getRequestDispatcher("../view/forAdmin/page/orderdetail.jsp").forward(request, response);
     }
 
     /**

@@ -46,22 +46,25 @@ public class RoomDBContext extends DBContext {
     public ArrayList<Room> getRooms(Order order) {
         ArrayList<Room> rooms = new ArrayList<>();
         try {
-            String sql = "SELECT [RoomID],[RoomName],[TypeID] \n"
-                    + "FROM [Rooms] \n"
-                    + "where RoomID not in (  \n"
-                    + "select RoomID from Orders o  \n"
-                    + "join Order_Room ro on ro.OrderID = o.OrderID  \n"
-                    + "where ((o.CheckIN <= ? and o.CheckOUT >= ?) \n"
-                    + "or (o.CheckIN <= ? and o.CheckOUT >= ?))\n"
-                    + "and o.TypeID = ?)  \n"
+            String sql = "SELECT [RoomID],[RoomName],[TypeID]  \n"
+                    + "FROM [Rooms]  \n"
+                    + "where RoomID not in (   \n"
+                    + "select RoomID from Orders o   \n"
+                    + "join Order_Room ro on ro.OrderID = o.OrderID   \n"
+                    + "where ((o.CheckIN <= ? and o.CheckOUT >= ?)  \n"
+                    + "or (o.CheckIN <= ? and o.CheckOUT >= ?)\n"
+                    + "or (o.CheckIN >= ? and o.CheckOUT <= ?)) \n"
+                    + "and o.TypeID = ?)\n"
                     + "and TypeID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setDate(1, order.getCheckIN());
             stm.setDate(2, order.getCheckIN());
             stm.setDate(3, order.getCheckOUT());
             stm.setDate(4, order.getCheckOUT());
-            stm.setInt(5, order.getRoomType().getId());
-            stm.setInt(6, order.getRoomType().getId());
+            stm.setDate(5, order.getCheckIN());
+            stm.setDate(6, order.getCheckOUT());
+            stm.setInt(7, order.getRoomType().getId());
+            stm.setInt(8, order.getRoomType().getId());
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Room r = new Room();
@@ -85,7 +88,8 @@ public class RoomDBContext extends DBContext {
                     + "select RoomID from Orders o  \n"
                     + "join Order_Room ro on ro.OrderID = o.OrderID  \n"
                     + "where ((o.CheckIN <= ? and o.CheckOUT >= ?) \n"
-                    + "or (o.CheckIN <= ? and o.CheckOUT >= ?))\n"
+                    + "or (o.CheckIN <= ? and o.CheckOUT >= ?)\n"
+                    + "or (o.CheckIN >= ? and o.CheckOUT <= ?)) \n"
                     + "and o.TypeID = ? and ro.OrderID <> ?)  \n"
                     + "and TypeID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -93,9 +97,11 @@ public class RoomDBContext extends DBContext {
             stm.setDate(2, order.getCheckIN());
             stm.setDate(3, order.getCheckOUT());
             stm.setDate(4, order.getCheckOUT());
-            stm.setInt(5, order.getRoomType().getId());
-            stm.setInt(6, order.getOrderID());
+            stm.setDate(5, order.getCheckIN());
+            stm.setDate(6, order.getCheckOUT());
             stm.setInt(7, order.getRoomType().getId());
+            stm.setInt(8, order.getOrderID());
+            stm.setInt(9, order.getRoomType().getId());
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Room r = new Room();
@@ -109,7 +115,7 @@ public class RoomDBContext extends DBContext {
         }
         return null;
     }
-    
+
     public void setRooms(int orderID, String[] rooms) {
         try {
             connection.setAutoCommit(false);
@@ -170,6 +176,25 @@ public class RoomDBContext extends DBContext {
             Logger.getLogger(RoomDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return order;
+    }
+
+    public Room getRoomsByID(int id) {
+        try {
+            String sql = "SELECT [RoomID],[RoomName],[TypeID]\n"
+                    + "  FROM [Rooms] where RoomID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Room room = new Room();
+                room.setId(rs.getInt(1));
+                room.setName(rs.getString(2));
+                return room;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 //    public void insertRoom(String name, int num){

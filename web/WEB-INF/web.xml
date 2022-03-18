@@ -76,6 +76,10 @@
         <servlet-name>TransactionHistoryController</servlet-name>
         <servlet-class>page.TransactionHistoryController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RejectController</servlet-name>
+        <servlet-class>for_admin.RejectController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>TransactionHistoryController</servlet-name>
         <url-pattern>/transactionhistory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RejectController</servlet-name>
+        <url-pattern>/admin/reject</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

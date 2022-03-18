@@ -28,7 +28,7 @@
                             Order detail
                         </header>
                         <div class="panel-body col-lg-8">
-                            <form class="form-horizontal tasi-form add-form" id="updateform" action="${pageContext.request.contextPath}/admin/detail" method="POST">
+                            <form class="form-horizontal tasi-form add-form" id="updateform" action="${pageContext.request.contextPath}/admin/orderdetail" method="POST">
                             <input type="hidden" name="orderID" value="${requestScope.order.orderID}">
                             <div class="form-group">
                                 <label class="col-sm-2 col-sm-2 control-label">Name:</label>
@@ -110,14 +110,16 @@
                                 var numberOfRooms = document.getElementById("numberOfRooms").value;
                                 if (type <= 0) {
                                     document.getElementById("type_alert").innerHTML = "<p>Please choose type</p>";
+                                }else{
+                                    document.getElementById("type_alert").innerHTML = "";
                                 }
                                 if (numberOfRooms <= 0) {
                                     document.getElementById("number_alert").innerHTML = "<p>Number of room must bigger than 0</p>";
+                                }else{
+                                    document.getElementById("number_alert").innerHTML = "";
                                 }
 
                                 if (type > 0 && numberOfRooms > 0) {
-                                    document.getElementById("type_alert").innerHTML = "";
-                                    document.getElementById("number_alert").innerHTML = "";
                                     document.getElementById("updateform").submit();
                                 }
                             }

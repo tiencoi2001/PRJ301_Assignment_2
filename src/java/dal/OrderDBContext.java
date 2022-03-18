@@ -15,7 +15,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Order;
+import model.Room;
 import model.RoomType;
+import sendmail.SendEmail;
 
 /**
  *
@@ -380,11 +382,47 @@ public class OrderDBContext extends DBContext {
         return false;
     }
 
-    public static void main(String[] args) {
-        OrderDBContext odbc = new OrderDBContext();
-        ArrayList<Order> orders = odbc.getListOrderForUser(1, 5, 1);
-        for (Order order : orders) {
-            System.out.println(order.getCheckIN() + " " + order.getCheckOUT());
+    public void DeleteOrder(Order order) {
+        try {
+            connection.setAutoCommit(false);
+            String sql = "DELETE [Orders] WHERE OrderID =  ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setDate(1, order.getCheckIN());
+            stm.setDate(2, order.getCheckOUT());
+            stm.setString(3, order.getName());
+            stm.setString(4, order.getEmail());
+            stm.setString(5, order.getPhone());
+            stm.setInt(6, order.getNumberOfRooms());
+            stm.setInt(7, order.getRoomType().getId());
+            stm.setInt(8, order.getOrderID());
+            stm.executeUpdate();
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+    }
+
+    public static void main(String[] args) {
+        
+        SendEmail sm = new SendEmail();
+        String subject = "Booking success";
+        String message = "<h1>Welcome to Queen Hotel</h1>"
+                + "<h2>Wish you have a great experience</h2>"
+                + "<h3>Your room: 401 402";
+
+        message += "</h3>";
+
+        sm.send("thurderfalcon2001@gmail.com", subject, message);
     }
 }
